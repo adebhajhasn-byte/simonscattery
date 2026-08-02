@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Website editor — Simons Cattery</title>
+<link rel="icon" href="/images/cropped-logo-192x192.png">
+
+<!--
+  Point the login widget at this site's own Identity service.
+  Without this it has to guess, and on a *.netlify.app address the guess
+  can fail with "Unable to access identity settings".
+-->
+<script>
+  window.netlifyIdentity = window.netlifyIdentity || {};
+</script>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"
+        data-netlify-identity-url="https://simonscattery.netlify.app/.netlify/identity"></script>
+</head>
+<body>
+<script src="https://unpkg.com/decap-cms@^3.9.0/dist/decap-cms.js"></script>
+<script>
+  (function () {
+    if (!window.netlifyIdentity || !window.netlifyIdentity.init) return;
+
+    // Tell the widget exactly where Identity lives, then start it.
+    window.netlifyIdentity.init({
+      APIUrl: 'https://simonscattery.netlify.app/.netlify/identity'
+    });
+
+    // An invitation link lands on the site root; carry the token over to here.
+    window.netlifyIdentity.on('init', function (user) {
+      if (!user) {
+        window.netlifyIdentity.on('login', function () {
+          document.location.href = '/admin/';
+        });
+      }
+    });
+  })();
+</script>
+</body>
+</html>
