@@ -1,0 +1,63 @@
+{
+  "order": 3,
+  "name": "Magaskawee´s Brian",
+  "card_name": "Magaskawee´s Brian",
+  "group": "king",
+  "badge": "neutered",
+  "has_page": true,
+  "photo": "/images/156065129_214891233668213_3758566769557974101_n-884x1024.jpg",
+  "card_photo": "/images/156065129_214891233668213_3758566769557974101_n-884x1024.jpg",
+  "award": "",
+  "rows": [
+    {
+      "label": "Born",
+      "value": "7. 4. 2017"
+    },
+    {
+      "label": "Breeder",
+      "value": "Claudia Mixner – Magaskawee Maine Coon|http://www.magaskawee.net/"
+    },
+    {
+      "label": "Colour",
+      "value": "Black classic tabby white"
+    },
+    {
+      "label": "Tests",
+      "value": "February 2019 · HCM N/N · PKD N/N"
+    },
+    {
+      "label": "Sire",
+      "value": "Adelheids Jevgenij Onegin"
+    },
+    {
+      "label": "Dam",
+      "value": "Magaskawee´s Catwoman"
+    },
+    {
+      "label": "Pedigree",
+      "value": "View on PawPeds &nearr;|https://pawpeds.com/db/?a=p&id=1361040&g=4&p=mco&o=elastic"
+    }
+  ],
+  "bio": "Brian is our dream come true — an amazing pedigree, beautiful and good-natured. He fits our idea of the Maine Coon perfectly: robust and richly coloured, with all of that reflected in his ancestors. It was love at first sight, and we feel truly lucky to have him in our breed.",
+  "gallery_cols": "g2",
+  "gallery_caption": "",
+  "gallery": [
+    {
+      "image": "/images/magaskawees_catwoman-1024x1024.jpg",
+      "alt": "Mama Magaskawees Catwoman"
+    },
+    {
+      "image": "/images/Onegin_2_5yHP.jpg",
+      "alt": "Papa Adelheids Jevgenij Onegin"
+    }
+  ],
+  "video": "",
+  "video_poster": "",
+  "video_caption": "",
+  "has_titles": false,
+  "titles_heading": "Titles & awards",
+  "titles": [],
+  "title_photos": [],
+  "title_photos_cols": "g3",
+  "show_on_card": true
+}

@@ -1,0 +1,95 @@
+{
+  "order": 4,
+  "name": "CH Simons Janis Joplin",
+  "card_name": "CH Simons\nJanis Joplin",
+  "group": "queen",
+  "badge": "champion",
+  "has_page": true,
+  "photo": "/images/IMG_0223-866x1024.jpeg",
+  "card_photo": "/images/IMG_0223-1-866x1024.jpeg",
+  "award": "CH Simons Janis Joplin is the TICA EN Region’s 2025 Best Brown (Black) Classic Torbie Maine Coon of the Year.",
+  "rows": [
+    {
+      "label": "Born",
+      "value": "14. 3. 2024"
+    },
+    {
+      "label": "Breeder",
+      "value": "Simons cattery"
+    },
+    {
+      "label": "Colour",
+      "value": "Brown Classic Torbie"
+    },
+    {
+      "label": "Tests",
+      "value": "DNA – negative · HCM N/N · PKD N/N · HD 0/0"
+    },
+    {
+      "label": "Sire",
+      "value": "Waikiki of Mouthys Dreamland"
+    },
+    {
+      "label": "Dam",
+      "value": "Pownee’s Silver Shadow"
+    },
+    {
+      "label": "COI",
+      "value": "16,2%"
+    },
+    {
+      "label": "Pedigree",
+      "value": "View on PawPeds &nearr;|https://www.pawpeds.com/db/?a=p&id=1758720&g=4&p=mco&o=elastic"
+    }
+  ],
+  "bio": "Joplin was our clear favourite from the day she was born — her temperament and tenderness, inherited from both parents, made the choice easy, and keeping her proved to be exactly right. As a one-year-old she earned her Champion title.",
+  "gallery_cols": "g3",
+  "gallery_caption": "",
+  "gallery": [
+    {
+      "image": "/images/IMG_0224.jpeg",
+      "alt": "Joplin"
+    },
+    {
+      "image": "/images/IMG_5135.jpeg",
+      "alt": "Joplin"
+    },
+    {
+      "image": "/images/IMG_0229-1024x768.jpeg",
+      "alt": "Mama Schatsi"
+    },
+    {
+      "image": "/images/IMG_0232-1-1024x728.jpeg",
+      "alt": "Pahokee’s Winonah"
+    },
+    {
+      "image": "/images/IMG_0233-790x1024.jpeg",
+      "alt": "Pownees Tiger & Dragon"
+    },
+    {
+      "image": "/images/IMG_0234-734x1024.jpeg",
+      "alt": "Taras Puma’s Sketch"
+    },
+    {
+      "image": "/images/IMG_0226-768x1024.jpeg",
+      "alt": "Joplin"
+    },
+    {
+      "image": "/images/IMG_0222-1024x774.jpeg",
+      "alt": "Joplin"
+    },
+    {
+      "image": "/images/IMG_0221-768x1024.jpeg",
+      "alt": "Joplin"
+    }
+  ],
+  "video": "",
+  "video_poster": "",
+  "video_caption": "",
+  "has_titles": true,
+  "titles_heading": "Titles & awards",
+  "titles": [],
+  "title_photos": [],
+  "title_photos_cols": "g3",
+  "show_on_card": true
+}

@@ -1,0 +1,79 @@
+{
+  "order": 0,
+  "name": "CH Simons Kami",
+  "card_name": "CH Simons Kami",
+  "group": "king",
+  "badge": "champion",
+  "has_page": true,
+  "photo": "/images/IMG_5134.jpeg",
+  "card_photo": "/images/IMG_4465-768x1024.jpeg",
+  "award": "",
+  "rows": [
+    {
+      "label": "Born",
+      "value": "31. 3. 2024"
+    },
+    {
+      "label": "Breeder",
+      "value": "Simons cattery"
+    },
+    {
+      "label": "Colour",
+      "value": "Brown Classic Tabby"
+    },
+    {
+      "label": "Tests",
+      "value": "DNA – negative · HCM N/N · PKD N/N · HD 0/0"
+    },
+    {
+      "label": "Sire",
+      "value": "Waikiki of Mouthys Dreamland"
+    },
+    {
+      "label": "Dam",
+      "value": "Adelheids Ronja|cat-ronja.html"
+    },
+    {
+      "label": "COI",
+      "value": "11,9%"
+    },
+    {
+      "label": "Pedigree",
+      "value": "View on PawPeds &nearr;|https://www.pawpeds.com/db/?a=p&id=1758721&g=4&p=mco&o=elastic"
+    }
+  ],
+  "bio": "Kami was love at first sight — his gaze and his strong, robust build won us over completely. He is a wonderful cuddler who adores attention and gives plenty of affection in return. As a yearling he already earned his Champion title, and we hope to add many more.",
+  "gallery_cols": "g3",
+  "gallery_caption": "",
+  "gallery": [
+    {
+      "image": "/images/IMG_4465-768x1024.jpeg",
+      "alt": "Kami"
+    },
+    {
+      "image": "/images/IMG_0082-948x1024.jpeg",
+      "alt": "Kami"
+    },
+    {
+      "image": "/images/DSC_0240-1024x678.jpeg",
+      "alt": "Kami"
+    },
+    {
+      "image": "/images/DSC_0206-1024x768.jpeg",
+      "alt": "Kami"
+    },
+    {
+      "image": "/images/IMG_5138-888x1024.jpeg",
+      "alt": "Kami"
+    }
+  ],
+  "video": "",
+  "video_poster": "",
+  "video_caption": "",
+  "has_titles": true,
+  "titles_heading": "Titles & awards",
+  "titles": [],
+  "title_photos": [],
+  "title_photos_cols": "g3",
+  "show_on_card": true
+}

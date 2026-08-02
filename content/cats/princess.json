@@ -1,0 +1,75 @@
+{
+  "order": 99,
+  "name": "Pownee’s Princess",
+  "card_name": "Pownee’s Princess",
+  "group": "queen",
+  "badge": "none",
+  "has_page": true,
+  "show_on_card": false,
+  "photo": "/images/att.kwX-nmcBwGFxdPT4V15dDt0HKmqBTM7cQT2FjCF2Nzo.jpeg",
+  "card_photo": "/images/att.kwX-nmcBwGFxdPT4V15dDt0HKmqBTM7cQT2FjCF2Nzo.jpeg",
+  "award": "",
+  "rows": [
+    {
+      "label": "Born",
+      "value": "16. 7. 2018"
+    },
+    {
+      "label": "Breeder",
+      "value": "Ulrike Detmers"
+    },
+    {
+      "label": "Colour",
+      "value": "Black classic silver torbie"
+    },
+    {
+      "label": "Tests",
+      "value": "HCM · PKD"
+    },
+    {
+      "label": "Sire",
+      "value": "Waikiki of Mouthys Dreamland"
+    },
+    {
+      "label": "Dam",
+      "value": "Pownee’s Bella Lucy"
+    },
+    {
+      "label": "COI",
+      "value": "8,19%"
+    },
+    {
+      "label": "Pedigree",
+      "value": "View on PawPeds &nearr;|https://www.pawpeds.com/db/?a=p&ids=3:1564564;2:1583101&g=4&p=mco&o=elastic"
+    }
+  ],
+  "bio": "A striking black classic silver torbie from Ulrike Detmers’ renowned Pownee’s lines.",
+  "has_titles": false,
+  "titles_heading": "Titles & awards",
+  "titles": [],
+  "title_photos": [],
+  "title_photos_cols": "g3",
+  "gallery": [
+    {
+      "image": "/images/att.h1zMPFQF-Men6CJ1siEHxYFZigRns2_-E5e15TUvugg-1.jpeg",
+      "alt": "Princess"
+    },
+    {
+      "image": "/images/att.CAgUolWTyshOCRnIkBGZXwfw4aUHpE7GPpplDaMGyPI-1.jpeg",
+      "alt": "Princess"
+    },
+    {
+      "image": "/images/att.VI8kocxtuwcyTclPfJBVwVRik424egyLeCYqwWNCtM0.jpeg",
+      "alt": "Princess"
+    },
+    {
+      "image": "/images/IMG_0236-2-1024x758.jpeg",
+      "alt": "Princess"
+    }
+  ],
+  "gallery_caption": "",
+  "gallery_cols": "g3",
+  "video": "",
+  "video_poster": "",
+  "video_caption": ""
+}

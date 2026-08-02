@@ -1,0 +1,13 @@
+# Uploaded pictures must never be executed as code.
+<FilesMatch "\.(?i:php|phtml|phps|php[0-9]|phar|cgi|pl|py|sh|htaccess)$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>
+<IfModule mod_php.c>
+  php_flag engine off
+</IfModule>

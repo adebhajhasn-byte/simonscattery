@@ -1,0 +1,63 @@
+{
+  "order": 7,
+  "name": "Simons Nefertiti",
+  "card_name": "Simons Nefertiti",
+  "group": "queen",
+  "badge": "none",
+  "has_page": true,
+  "photo": "/images/nefertiti-1.jpg",
+  "card_photo": "/images/nefertiti-1-768.jpg",
+  "award": "",
+  "rows": [
+    {
+      "label": "Born",
+      "value": "9. 11. 2025"
+    },
+    {
+      "label": "Colour",
+      "value": "Black smoke"
+    },
+    {
+      "label": "Sire",
+      "value": "Adelheids Gamerlan"
+    },
+    {
+      "label": "Dam",
+      "value": "Simons Harriette|cat-harriette.html"
+    },
+    {
+      "label": "COI",
+      "value": "16,2%"
+    },
+    {
+      "label": "Pedigree",
+      "value": "https://www.pawpeds.com/db/?a=p&id=1861120&g=4&p=mco&o=elastic"
+    }
+  ],
+  "bio": "Our little rebel. As soon as she was born, I knew she would stay with us. She was born the only girl among her brothers. She will surely grow up to be a beautiful lady who will be the pride of our cattery.",
+  "gallery_cols": "g3",
+  "gallery_caption": "",
+  "gallery": [
+    {
+      "image": "/images/nefertiti-2.jpg",
+      "alt": "Simons Nefertiti"
+    },
+    {
+      "image": "/images/nefertiti-3.jpg",
+      "alt": "Simons Nefertiti"
+    },
+    {
+      "image": "/images/Smoke-girl-837x1024.jpg",
+      "alt": "Simons Nefertiti as a kitten"
+    }
+  ],
+  "video": "",
+  "video_poster": "",
+  "video_caption": "",
+  "has_titles": false,
+  "titles_heading": "Titles & awards",
+  "titles": [],
+  "title_photos": [],
+  "title_photos_cols": "g3",
+  "show_on_card": true
+}

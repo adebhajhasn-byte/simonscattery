@@ -1,0 +1,8 @@
+{
+  "style": "\n        .choose{display:grid;grid-template-columns:repeat(2,1fr);gap:30px;margin-top:18px}\n        .choice{position:relative;display:block;text-decoration:none;border-radius:8px;overflow:hidden;\n         border:1px solid var(--line-soft);box-shadow:var(--shadow-lg);aspect-ratio:4/5}\n        .choice img{width:100%;height:100%;object-fit:cover;object-position:center 22%;transition:transform 1.2s var(--ease)}\n        .choice:hover img{transform:scale(1.06)}\n        .choice .cveil{position:absolute;inset:0;background:linear-gradient(to top,rgba(48,42,33,.82),rgba(48,42,33,.12) 56%,transparent)}\n        .choice .corner{position:absolute;inset:13px;border:1px solid rgba(255,253,247,.5);border-radius:5px;transition:border-color .45s}\n        .choice:hover .corner{border-color:var(--gold)}\n        .choice .clabel{position:absolute;left:0;right:0;bottom:0;padding:34px;text-align:center;color:#fff}\n        .choice .clabel svg{width:36px;height:36px;color:#f0d9a8;margin-bottom:6px}\n        .choice .clabel h2{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(2rem,4.5vw,3.2rem);color:#fff;line-height:1}\n        .choice .clabel span{display:inline-block;margin-top:12px;font-size:.72rem;letter-spacing:3px;text-transform:uppercase;color:rgba(255,253,247,.88)}\n        @media(max-width:700px){.choose{grid-template-columns:1fr;gap:22px}}\n    ",
+  "header": "\n    <p class=\"kick\">Our family</p>\n    <h1>Our <em>Cats</em></h1>\n    <p class=\"lead\">Meet our gentle giants — choose a side of the family to explore.</p>\n    <div class=\"leaf\"></div>\n",
+  "covers": {
+    "kings": "IMG_4465-768x1024.jpeg",
+    "queens": "IMG_0223-1-866x1024.jpeg"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "order": 8,
+  "name": "Adelheid´s Ronja",
+  "card_name": "Adelheid´s Ronja",
+  "group": "queen",
+  "badge": "neutered",
+  "has_page": true,
+  "photo": "/images/133762961_1299024753781191_2597813809830242398_n-1.jpg",
+  "card_photo": "/images/133762961_1299024753781191_2597813809830242398_n-1.jpg",
+  "award": "",
+  "rows": [
+    {
+      "label": "Born",
+      "value": "16. 7. 2018"
+    },
+    {
+      "label": "Breeder",
+      "value": "Ada Kroupa – Adelheids cattery|http://www.adelheidcats.com/about-us/?lang=en"
+    },
+    {
+      "label": "Colour",
+      "value": "Classic tabby white"
+    },
+    {
+      "label": "Tests",
+      "value": "2020 · HCM N/N · PKD N/N"
+    },
+    {
+      "label": "Sire",
+      "value": "Magaskawee´s Brian|cat-brian.html"
+    },
+    {
+      "label": "Dam",
+      "value": "Wackymoon Sweet THing PP"
+    },
+    {
+      "label": "COI",
+      "value": "8,19%"
+    },
+    {
+      "label": "Pedigree",
+      "value": "View on PawPeds &nearr;|https://www.pawpeds.com/db/?a=p&id=1457764&g=4&p=mco&o=elastic"
+    }
+  ],
+  "bio": "This girl is our treasure — a real gentle giant from the pairing of “Svatka” and our Brian, and a source of valuable new blood for us. Her kittens are big, healthy and super cuddly. She has a lovely character, a beautifully soft coat, and just enough quirkiness to keep things interesting. Our thanks to Ada Kroupa for her.",
+  "gallery_cols": "g1",
+  "gallery_caption": "Dam — Wackymoon Sweet Thing PP",
+  "gallery": [
+    {
+      "image": "/images/SVATUSHE-PASOVKA.jpg",
+      "alt": "Wackymoon Sweet Thing PP"
+    }
+  ],
+  "video": "",
+  "video_poster": "",
+  "video_caption": "",
+  "has_titles": false,
+  "titles_heading": "Titles & awards",
+  "titles": [],
+  "title_photos": [],
+  "title_photos_cols": "g3",
+  "show_on_card": true
+}

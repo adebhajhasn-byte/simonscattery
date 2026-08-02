@@ -1,0 +1,81 @@
+{
+  "title_tag": "Our Area — Simons Cattery",
+  "kick": "Where they live",
+  "title": "Our <em>Area</em>",
+  "lead": "We all live together — our cats share every space with us.",
+  "intro_title": "We all live together",
+  "intro_text": "All my cats live with us, with the option of going out through a folding door onto a fenced patio or into an outdoor aviary. Moms with kittens are kept in a separate room for a while.",
+  "sections": [
+    {
+      "icon": "tree",
+      "title": "<em>Outdoor</em>",
+      "cols": "g2",
+      "images": [
+        {
+          "image": "/images/207077765_872879319970035_2658395975724762025_n.jpg",
+          "alt": "Outdoor"
+        },
+        {
+          "image": "/images/206968051_954478668674562_2932162017300784269_n.jpg",
+          "alt": "Aviary"
+        }
+      ]
+    },
+    {
+      "icon": "roof",
+      "title": "<em>Patio</em>",
+      "cols": "g2",
+      "images": [
+        {
+          "image": "/images/207443924_344018900575686_2547906717473281828_n.jpg",
+          "alt": "Patio"
+        },
+        {
+          "image": "/images/156055921_197255125517375_3603661752263429662_n.jpg",
+          "alt": "Patio"
+        }
+      ]
+    },
+    {
+      "icon": "cat",
+      "title": "<em>Brian</em>",
+      "cols": "g2",
+      "images": [
+        {
+          "image": "/images/Brian-october-2019.jpg",
+          "alt": "Brian"
+        },
+        {
+          "image": "/images/156321193_1128504107591757_2357810310367056995_n.jpg",
+          "alt": "Brian"
+        }
+      ]
+    },
+    {
+      "icon": "kitchen",
+      "title": "<em>Kitchen</em>",
+      "cols": "g1",
+      "images": [
+        {
+          "image": "/images/IMG_5140.jpeg",
+          "alt": "Kitchen"
+        }
+      ]
+    },
+    {
+      "icon": "play",
+      "title": "Playing with <em>Happy</em>",
+      "cols": "g2",
+      "images": [
+        {
+          "image": "/images/att.YJG8HWycMhzOe5GG2Qarzmao-G1WgTH_5YaDdoUeTJI.jpeg",
+          "alt": "Playing"
+        },
+        {
+          "image": "/images/att.wStrTmiioJztJg902SN8obXsTkeYVXOxJxlJJ95y9ls.jpeg",
+          "alt": "Playing"
+        }
+      ]
+    }
+  ]
+}

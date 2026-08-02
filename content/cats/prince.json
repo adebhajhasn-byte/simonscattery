@@ -1,0 +1,67 @@
+{
+  "order": 2,
+  "name": "CH Simons My P Prince",
+  "card_name": "CH Simons\nMy P Prince",
+  "group": "king",
+  "badge": "champion",
+  "has_page": true,
+  "photo": "/images/prince-1.jpg",
+  "card_photo": "/images/prince-1-768.jpg",
+  "award": "",
+  "rows": [
+    {
+      "label": "Born",
+      "value": "20. 6. 2025"
+    },
+    {
+      "label": "Colour",
+      "value": "Red silver with white"
+    },
+    {
+      "label": "Sire",
+      "value": "Child of Maine P Montgomery|cat-montgomery.html"
+    },
+    {
+      "label": "Dam",
+      "value": "Pownee’s Princess|cat-princess.html"
+    },
+    {
+      "label": "COI",
+      "value": "12,3%"
+    },
+    {
+      "label": "Pedigree",
+      "value": "View on PawPeds &nearr;|https://www.pawpeds.com/db/?a=p&id=1861119&g=4&p=mco&o=elastic"
+    }
+  ],
+  "bio": "Ixí is our gentle and incredibly talkative boy. With his sweet chirping, he accompanies almost every step he takes, whether he is heading to the kitchen or to his litter box. He is an ultimate cuddler — whenever he gets a chance, he settles on us regardless of the position we are resting in, and starts purring loudly. A fascinating feature of his are his large polydactyl paws, which he occasionally uses to gently pull my hand closer when he craves some petting.\n\nAlongside his wonderful temperament, he boasts a silky, soft coat that requires regular grooming. Ixí is also a natural-born showman who truly blossoms at cat shows and thoroughly enjoys the admiration of the crowd. He has a very well-balanced personality; he is never startled by noise or crowds, and since he was a kitten, he has fearlessly assisted with vacuuming or blow-drying.",
+  "gallery_cols": "g3",
+  "gallery_caption": "",
+  "gallery": [
+    {
+      "image": "/images/prince-2.jpg",
+      "alt": "Ixí and his polydactyl paws"
+    },
+    {
+      "image": "/images/prince-3.jpg",
+      "alt": "Ixí at a cat show"
+    },
+    {
+      "image": "/images/prince-4.jpg",
+      "alt": "Ixí at a cat show"
+    },
+    {
+      "image": "/images/My-Prince-859x1024.jpg",
+      "alt": "CH Simons My P Prince"
+    }
+  ],
+  "video": "",
+  "video_poster": "",
+  "video_caption": "",
+  "has_titles": true,
+  "titles_heading": "Titles & awards",
+  "titles": [],
+  "title_photos": [],
+  "title_photos_cols": "g3",
+  "show_on_card": true
+}

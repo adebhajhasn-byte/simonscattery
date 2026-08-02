@@ -1,0 +1,67 @@
+{
+  "order": 6,
+  "name": "Simons Harriette",
+  "card_name": "Simons Harriette",
+  "group": "queen",
+  "badge": "none",
+  "has_page": true,
+  "photo": "/images/harriette-1.jpg",
+  "card_photo": "/images/2697af1b-8632-4846-a335-4fb3f9b453f8-888x1024.jpg",
+  "award": "",
+  "rows": [
+    {
+      "label": "Born",
+      "value": "19. 8. 2022"
+    },
+    {
+      "label": "Colour",
+      "value": "Black silver"
+    },
+    {
+      "label": "Tests",
+      "value": "2025 · HD 0/0 · HCM N/N · Genetic — negative"
+    },
+    {
+      "label": "Sire",
+      "value": "Berkano Odinson"
+    },
+    {
+      "label": "Dam",
+      "value": "Pownee’s Silver Shadow"
+    },
+    {
+      "label": "COI",
+      "value": "17,1%"
+    },
+    {
+      "label": "Pedigree",
+      "value": "View on PawPeds &nearr;|https://www.pawpeds.com/db/?a=p&id=1661250&g=4&p=mco&o=elastic"
+    }
+  ],
+  "bio": "",
+  "gallery_cols": "g3",
+  "gallery_caption": "",
+  "gallery": [
+    {
+      "image": "/images/harriette-2.jpg",
+      "alt": "Simons Harriette"
+    },
+    {
+      "image": "/images/2697af1b-8632-4846-a335-4fb3f9b453f8-888x1024.jpg",
+      "alt": "Simons Harriette"
+    },
+    {
+      "image": "/images/567677673_1269990488504413_7228613215582733391_n-912x1024.jpg",
+      "alt": "Simons Harriette"
+    }
+  ],
+  "video": "/images/harriette-video.mp4",
+  "video_poster": "/images/harriette-video-poster.jpg",
+  "video_caption": "Harriette at home",
+  "has_titles": false,
+  "titles_heading": "Titles & awards",
+  "titles": [],
+  "title_photos": [],
+  "title_photos_cols": "g3",
+  "show_on_card": true
+}

@@ -1,0 +1,10 @@
+{
+  "name": "simonscattery",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Simons Cattery — static site built from the files in /content",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "serve": "npm run build && npx --yes serve site -l 8000"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "title_tag": "Simons Cattery — Maine Coon · Belgium",
+  "kick": "Welcome to our home",
+  "title": "Simons <em style=\"font-style:italic;color:var(--sage-deep)\">Cattery</em>",
+  "lead": "A small, loving family of Maine Coon kings and queens — raised at home in St. Joris Winge, Belgium.",
+  "buttons": [
+    {
+      "text": "See our kittens",
+      "link": "kittens.html",
+      "style": "solid"
+    },
+    {
+      "text": "Meet the cats",
+      "link": "our-cats.html",
+      "style": "ghost"
+    }
+  ],
+  "badges": [
+    {
+      "image": "/images/G2RibbonSmall.gif",
+      "alt": "Show ribbon",
+      "style": ""
+    },
+    {
+      "image": "/images/UMA-big-star.png",
+      "alt": "Award",
+      "style": ""
+    },
+    {
+      "image": "/images/Naam.png",
+      "alt": "Title",
+      "style": "height:54px"
+    }
+  ],
+  "about_icon": "heart",
+  "about_title": "About <em>us</em>",
+  "about_text": "Many years ago I fell in love with the Maine Coon breed. I watched videos I found on YouTube and read all about the character of these cats. I was completely captivated by them. I have had alley cats around me all my life, and the Maine Coon was my dream. Then the moment came and my dream came true.\n\nI took the Pawpeds course and am still educating myself on breeding. The welfare of cats is very important to me, and that is why I adapt everything to my cats. The cats simply live with us — watch TV with us, assist us with showering, preparing food and cleaning. We have common areas, a terrace and an aviary.\n\nI have also become very interested in their diet, and thanks to them I have become a consultant for a company that produces pet food. We feed only quality food, which you can find linked below.",
+  "about_link_text": "Visit Catlife →",
+  "about_link_url": "https://catlife.be/",
+  "features": [
+    {
+      "icon": "home",
+      "title": "Raised at home",
+      "text": "Our cats live with us in shared spaces, never in cages — socialised from day one."
+    },
+    {
+      "icon": "heart",
+      "title": "Welfare first",
+      "text": "Everything is adapted to the cats — Pawpeds-trained and always learning more."
+    },
+    {
+      "icon": "food",
+      "title": "Quality nutrition",
+      "text": "As a pet-food consultant, I feed only quality food tailored to each cat."
+    }
+  ],
+  "news_icon": "news",
+  "news_title": "Latest <em>news</em>",
+  "news_tag": "Blog",
+  "news_count": 3,
+  "news_all_text": "All blog posts"
+}
