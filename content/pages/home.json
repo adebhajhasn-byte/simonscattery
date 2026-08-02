@@ -14,7 +14,7 @@
   ],
   "news_count": 3,
   "news_icon": "news",
-  "kick": "jjjj",
+  "kick": "Welcome to our home",
   "about_title": "About <em>us</em>",
   "about_icon": "heart",
   "news_title": "Latest <em>news</em>",
@@ -40,7 +40,7 @@
   "news_all_text": "All blog posts",
   "title": "Simons <em style=\"font-style:italic;color:var(--sage-deep)\">Cattery</em>",
   "about_link_url": "https://catlife.be/",
-  "lead": " small, loving family of Maine Coon kings and queens — raised at home in St. Joris Winge, Belgium.",
+  "lead": "A small, loving family of Maine Coon kings and queens — raised at home in St. Joris Winge, Belgium.",
   "features": [
     {
       "icon": "home",
