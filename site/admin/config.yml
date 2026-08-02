@@ -6,8 +6,8 @@ media_folder: "site/images"
 public_folder: "/images"
 
 locale: "en"
-site_url: "https://simonscattery.be"
-display_url: "https://simonscattery.be"
+site_url: "https://simonscattery.netlify.app"
+display_url: "https://simonscattery.netlify.app"
 logo_url: "/images/logo.webp"
 
 collections:
