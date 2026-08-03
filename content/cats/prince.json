@@ -4,7 +4,15 @@
   "video_caption": "",
   "card_photo": "/images/img_3367.jpeg",
   "badge": "champion",
-  "title_photos": [],
+  "title_photos": [
+    "/images/3e189724-87cd-4780-b9e8-2bea0af63f0c.jpeg",
+    "/images/img_3181.jpeg",
+    "/images/img_3136.jpeg",
+    "/images/img_3134.jpeg",
+    "/images/img_1151.jpeg",
+    "/images/img_1356.jpeg",
+    "/images/img_1356.jpeg"
+  ],
   "bio": "Ixí is our gentle and incredibly talkative boy. With his sweet chirping, he accompanies almost every step he takes, whether he is heading to the kitchen or to his litter box. He is an ultimate cuddler — whenever he gets a chance, he settles on us regardless of the position we are resting in, and starts purring loudly. A fascinating feature of his are his large polydactyl paws, which he occasionally uses to gently pull my hand closer when he craves some petting.\n\nAlongside his wonderful temperament, he boasts a silky, soft coat that requires regular grooming. Ixí is also a natural-born showman who truly blossoms at cat shows and thoroughly enjoys the admiration of the crowd. He has a very well-balanced personality; he is never startled by noise or crowds, and since he was a kitten, he has fearlessly assisted with vacuuming or blow-drying.",
   "title_photos_cols": "g3",
   "name": "CH Simons My P Prince",
@@ -62,7 +70,20 @@
   "gallery_caption": "",
   "card_name": "CH Simons\nMy P Prince",
   "video": "",
-  "titles": [],
+  "titles": [
+    {
+      "title": "CHAMPION",
+      "detail": "TICA - 28 february 2026"
+    },
+    {
+      "title": "Award of Excellence - THIRD BEST MCO Polydactyl of the year 2026",
+      "detail": "TICA - Northern Europe Region"
+    },
+    {
+      "title": "Award of Excellance - BEST Red silver MCO polydactyl of the year 2026",
+      "detail": "TICA - Northern Europe"
+    }
+  ],
   "award": "",
   "titles_heading": "Titles & awards",
   "group": "king"
