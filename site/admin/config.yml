@@ -78,7 +78,9 @@ collections:
         label_singular: "photo"
         widget: "list"
         required: false
-        field: { name: "image", label: "Photo", widget: "image" }
+        fields:
+          - { name: "image", label: "Photo", widget: "image" }
+          - { name: "alt", label: "Short description", widget: "string", required: false }
       - { name: "title_photos_cols", label: "Show photos per row", widget: "select", required: false,
           options: [{ label: "Three", value: "g3" }, { label: "Two", value: "g2" }, { label: "One big photo", value: "g1" }],
           default: "g3" }
@@ -89,7 +91,9 @@ collections:
         label_singular: "photo"
         widget: "list"
         required: false
-        field: { name: "image", label: "Photo", widget: "image" }
+        fields:
+          - { name: "image", label: "Photo", widget: "image" }
+          - { name: "alt", label: "Short description", widget: "string", required: false }
       - { name: "gallery_caption", label: "Caption above the gallery", widget: "string", required: false }
       - { name: "gallery_cols", label: "Photos per row", widget: "select", required: false,
           options: [{ label: "Three", value: "g3" }, { label: "Two", value: "g2" }, { label: "One big photo", value: "g1" }],
@@ -210,7 +214,9 @@ collections:
                 label_singular: "photo"
                 widget: "list"
                 required: false
-                field: { name: "image", label: "Photo", widget: "image" }
+                fields:
+                  - { name: "image", label: "Photo", widget: "image" }
+                  - { name: "alt", label: "Short description", widget: "string", required: false }
               - { name: "cols", label: "Photos per row", widget: "select",
                   options: [{ label: "Three", value: "g3" }, { label: "Two", value: "g2" }, { label: "One big photo", value: "g1" }] }
 
@@ -238,7 +244,9 @@ collections:
                 label: "Photos"
                 label_singular: "photo"
                 widget: "list"
-                field: { name: "image", label: "Photo", widget: "image" }
+                fields:
+                  - { name: "image", label: "Photo", widget: "image" }
+                  - { name: "alt", label: "Short description", widget: "string", required: false }
               - { name: "cols", label: "Photos per row", widget: "select",
                   options: [{ label: "Two", value: "g2" }, { label: "Three", value: "g3" }, { label: "One big photo", value: "g1" }] }
 

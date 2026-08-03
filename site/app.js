@@ -142,3 +142,14 @@
     if (Math.abs(dx) > 50) step(dx < 0 ? 1 : -1);
   }, { passive: true });
 })();
+
+/* An e-mail invitation or password reset lands on the home page.
+   Carry the token over to the editor so the password box appears there. */
+(function () {
+  var h = window.location.hash || '';
+  if (h.indexOf('invite_token=') > -1 || h.indexOf('recovery_token=') > -1) {
+    if (window.location.pathname.indexOf('/admin') !== 0) {
+      window.location.replace('/admin/' + h);
+    }
+  }
+})();

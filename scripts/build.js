@@ -48,6 +48,16 @@ const eRich = (s) =>
 /** An image path from the CMS is "/images/x.jpg"; pages want "images/x.jpg". */
 const img = (p) => String(p ?? '').replace(/^\/+/, '');
 
+/*
+ * A photo in a list can arrive in two shapes, depending on how the editor
+ * saved it: a bare path ("/images/x.jpg") or an object ({image, alt}).
+ * Read both, so a photo added from the editor is never dropped.
+ */
+const photoSrc = (it) =>
+  typeof it === 'string' ? it : (it && (it.image || it.src)) || '';
+const photoAlt = (it) =>
+  (it && typeof it === 'object' && (it.alt || '')) || '';
+
 const write = (name, html) => {
   fs.writeFileSync(path.join(OUT, name), html);
   return name;
@@ -128,11 +138,14 @@ const head = (title, extra = '', navActive = null) =>
 
 const tail = (c) => footer(c) + '\n' + toTop + '\n<script src="app.js"></script>\n</body>\n</html>\n';
 
-const gallery = (cols, images) => {
+const gallery = (cols, images, fallbackAlt = '') => {
   if (!images || !images.length) return '';
   const t = images
-    .map((im) => `\n      <img loading="lazy" src="${e(img(im.image))}" alt="${e(im.alt || '')}">`)
+    .filter((im) => photoSrc(im))
+    .map((im) => `\n      <img loading="lazy" src="${e(img(photoSrc(im)))}" ` +
+      `alt="${e(photoAlt(im) || fallbackAlt)}">`)
     .join('');
+  if (!t) return '';
   const c = /^g[123]$/.test(cols || '') ? cols : 'g3';
   return `<div class="gallery ${c} reveal">${t}\n    </div>`;
 };
@@ -255,7 +268,7 @@ const catPage = (cat, contact) => {
       `    <div class="titles-rule reveal"></div>\n` +
       (items ? `    <ul class="titles-list reveal">${items}</ul>\n` : '') +
       (cat.title_photos && cat.title_photos.length
-        ? `    ${gallery(cat.title_photos_cols || 'g3', cat.title_photos)}\n` : '') +
+        ? `    ${gallery(cat.title_photos_cols || 'g3', cat.title_photos, cat.name)}\n` : '') +
       `  </section>`;
   }
 
@@ -264,7 +277,7 @@ const catPage = (cat, contact) => {
     const cap = String(cat.gallery_caption ?? '').trim();
     extra += `\n  <section style="margin-top:18px">` +
       (cap ? `<p class="cap reveal">${eRich(cap)}</p>` : '') +
-      gallery(cat.gallery_cols, cat.gallery) + `</section>`;
+      gallery(cat.gallery_cols, cat.gallery, cat.name) + `</section>`;
   }
 
   let headExtra = '';
@@ -309,7 +322,8 @@ const homePage = (h, posts, contact) => {
     .join('');
 
   const badges = (h.badges || [])
-    .map((b) => `\n    <img src="${e(img(b.image))}" alt="${e(b.alt || '')}"` +
+    .filter((b) => photoSrc(b))
+    .map((b) => `\n    <img src="${e(img(photoSrc(b)))}" alt="${e(photoAlt(b))}"` +
       (b.style ? ` style="${e(b.style)}"` : '') + '>')
     .join('');
 
@@ -358,7 +372,7 @@ const kittensPage = (k, contact) => {
       ? `\n      <p class="meta-line">${eRich(l.meta)}</p>` : '';
     return `\n  <section>\n    ${shead(l.icon, l.title)}\n` +
       `    <div class="litter reveal">\n      ${pill}${text}${meta}\n    </div>\n` +
-      `    ${gallery(l.cols, l.images)}\n  </section>\n`;
+      `    ${gallery(l.cols, l.images, l.title)}\n  </section>\n`;
   }).join('');
 
   return head(e(k.title_tag), '', 'kittens.html') +
