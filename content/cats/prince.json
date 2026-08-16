@@ -3,7 +3,7 @@
   "gallery_cols": "g3",
   "video_caption": "",
   "card_photo": "/images/img_3367.jpeg",
-  "badge": "champion",
+  "badge": "grand_champion",
   "title_photos": [
     {
       "image": "/images/3e189724-87cd-4780-b9e8-2bea0af63f0c.jpeg",
@@ -28,11 +28,15 @@
     {
       "image": "/images/img_1356.jpeg",
       "alt": ""
+    },
+    {
+      "image": "https://scontent-bru2-1.xx.fbcdn.net/v/t39.30808-6/773950137_1522583969911729_1755267867325042624_n.jpg?stp=cp6_dst-jpg_tt6&cstp=mx2048x1356&ctp=s2048x1356&_nc_cat=111&ccb=1-7&_nc_sid=833d8c&_nc_ohc=sOo3dbe_PL8Q7kNvwGbxBEr&_nc_oc=Adr7_J66VCHdiwAYQUHC3FGXANT6a9ZlkTZx-EIROV0TJgkT6u9YsYPc8qTARWc9Ft8F0VIump5sfpw-QJTS-UlL&_nc_zt=23&_nc_ht=scontent-bru2-1.xx&_nc_gid=yIm0n3Upzm5swGXBeAWJ4g&_nc_ss=7b2a8&oh=00_AQGNiUOm3CpzutcQ0seqkapWLB6TVGkmPhxvek3ESUPDWw&oe=6A87E755",
+      "alt": "Grand Champion Certificate"
     }
   ],
   "bio": "Ixí is our gentle and incredibly talkative boy. With his sweet chirping, he accompanies almost every step he takes, whether he is heading to the kitchen or to his litter box. He is an ultimate cuddler — whenever he gets a chance, he settles on us regardless of the position we are resting in, and starts purring loudly. A fascinating feature of his are his large polydactyl paws, which he occasionally uses to gently pull my hand closer when he craves some petting.\n\nAlongside his wonderful temperament, he boasts a silky, soft coat that requires regular grooming. Ixí is also a natural-born showman who truly blossoms at cat shows and thoroughly enjoys the admiration of the crowd. He has a very well-balanced personality; he is never startled by noise or crowds, and since he was a kitten, he has fearlessly assisted with vacuuming or blow-drying.",
   "title_photos_cols": "g3",
-  "name": "CH Simons My P Prince",
+  "name": "GRC Simons My P Prince",
   "show_on_card": true,
   "order": 2,
   "video_poster": "",
@@ -75,7 +79,7 @@
     },
     {
       "label": "Tests",
-      "value": ""
+      "value": "2026 . Hips Dipslasia: normal/normal"
     },
     {
       "label": "Sire",
@@ -95,7 +99,7 @@
     }
   ],
   "gallery_caption": "",
-  "card_name": "CH Simons\nMy P Prince",
+  "card_name": "GRC Simons\nMy P Prince",
   "video": "",
   "titles": [
     {
@@ -109,6 +113,10 @@
     {
       "title": "Award of Excellance - BEST Red silver MCO polydactyl of the year 2026",
       "detail": "TICA - Northern Europe"
+    },
+    {
+      "title": "Grand Champion",
+      "detail": "TICA - 2026 July 05"
     }
   ],
   "award": "",
