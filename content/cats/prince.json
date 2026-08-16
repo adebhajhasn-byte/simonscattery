@@ -5,13 +5,30 @@
   "card_photo": "/images/img_3367.jpeg",
   "badge": "champion",
   "title_photos": [
-    "/images/3e189724-87cd-4780-b9e8-2bea0af63f0c.jpeg",
-    "/images/img_3181.jpeg",
-    "/images/img_3136.jpeg",
-    "/images/img_3134.jpeg",
-    "/images/img_1151.jpeg",
-    "/images/img_1356.jpeg",
-    "/images/img_1356.jpeg"
+    {
+      "image": "/images/3e189724-87cd-4780-b9e8-2bea0af63f0c.jpeg",
+      "alt": ""
+    },
+    {
+      "image": "/images/img_3181.jpeg",
+      "alt": ""
+    },
+    {
+      "image": "/images/img_3136.jpeg",
+      "alt": ""
+    },
+    {
+      "image": "/images/img_3134.jpeg",
+      "alt": ""
+    },
+    {
+      "image": "/images/img_1151.jpeg",
+      "alt": ""
+    },
+    {
+      "image": "/images/img_1356.jpeg",
+      "alt": ""
+    }
   ],
   "bio": "Ixí is our gentle and incredibly talkative boy. With his sweet chirping, he accompanies almost every step he takes, whether he is heading to the kitchen or to his litter box. He is an ultimate cuddler — whenever he gets a chance, he settles on us regardless of the position we are resting in, and starts purring loudly. A fascinating feature of his are his large polydactyl paws, which he occasionally uses to gently pull my hand closer when he craves some petting.\n\nAlongside his wonderful temperament, he boasts a silky, soft coat that requires regular grooming. Ixí is also a natural-born showman who truly blossoms at cat shows and thoroughly enjoys the admiration of the crowd. He has a very well-balanced personality; he is never startled by noise or crowds, and since he was a kitten, he has fearlessly assisted with vacuuming or blow-drying.",
   "title_photos_cols": "g3",
@@ -37,8 +54,14 @@
       "image": "/images/My-Prince-859x1024.jpg",
       "alt": "CH Simons My P Prince"
     },
-    "/images/img_3377.jpeg",
-    "/images/img_3381.jpeg"
+    {
+      "image": "/images/img_3377.jpeg",
+      "alt": ""
+    },
+    {
+      "image": "/images/img_3381.jpeg",
+      "alt": ""
+    }
   ],
   "has_page": true,
   "rows": [
@@ -49,6 +72,10 @@
     {
       "label": "Colour",
       "value": "Red silver with white"
+    },
+    {
+      "label": "Tests",
+      "value": ""
     },
     {
       "label": "Sire",

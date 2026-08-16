@@ -24,83 +24,120 @@ collections:
     sortable_fields: ["order", "name", "group"]
     fields:
       - { name: "order", label: "Position on the page (0 = first)", widget: "number", default: 99, value_type: "int" }
-      - { name: "name", label: "Name", widget: "string",
+      - { name: "name", label: "Cat name", widget: "string",
           hint: "The name at the top of her own page. Put a word between <em> and </em> to show it in italic green." }
-      - { name: "card_name", label: "Short name for the card", widget: "text", required: false,
+      - { name: "card_name", label: "Short name for the list page", widget: "text", required: false,
           hint: "Shown on the Kings / Queens page. Press Enter to split it over two lines." }
       - { name: "group", label: "King or Queen", widget: "select",
           options: [{ label: "Queen", value: "queen" }, { label: "King", value: "king" }], default: "queen" }
-      - { name: "badge", label: "Badge on the card", widget: "select", required: false,
-          options: [{ label: "None", value: "none" },
+      - { name: "badge", label: "Championship badge", widget: "select", required: false,
+          hint: "The little label shown on top of her photo in the Kings / Queens list.",
+          options: [{ label: "No badge", value: "none" },
                     { label: "Champion", value: "champion" },
+                    { label: "Grand Champion", value: "grand_champion" },
                     { label: "Neutered", value: "neutered" }], default: "none" }
       - { name: "has_page", label: "Give this cat a page of her own", widget: "boolean", default: true }
       - { name: "show_on_card", label: "Show on the Kings / Queens page", widget: "boolean", default: true,
-          hint: "Turn off to keep her page but take her card off the list." }
+          hint: "Turn off to keep her page but take her out of the list." }
 
-      - { name: "photo", label: "Main photo (top of her page)", widget: "image", required: false }
-      - { name: "card_photo", label: "Photo on the card", widget: "image", required: false,
-          hint: "Leave the same as the main photo if you like." }
+      # ─────────────── photos
+      - { name: "photo", label: "Main photo", widget: "image", required: false,
+          hint: "The big photo at the top of her own page." }
+      - { name: "card_photo", label: "Photo for the list page", widget: "image", required: false,
+          hint: "The photo shown in the Kings / Queens list. You may use the same one as the main photo." }
 
+      # ─────────────── information table
       - name: "rows"
         label: "Information table"
         label_singular: "line"
         widget: "list"
         required: false
+        collapsed: false
         summary: "{{label}}: {{value}}"
+        hint: >-
+          One line per fact. The usual lines are Born, Colour, Tests (health tests),
+          Sire and Dam (the parents), COI and Pedigree. A line stays hidden on the
+          website until you fill in the right-hand side, so you can add a line now
+          and fill it in later.
+        default:
+          - { label: "Born", value: "" }
+          - { label: "Colour", value: "" }
+          - { label: "Tests", value: "" }
+          - { label: "Sire", value: "" }
+          - { label: "Dam", value: "" }
+          - { label: "COI", value: "" }
+          - { label: "Pedigree", value: "" }
         fields:
-          - { name: "label", label: "Left side", widget: "string", hint: "Born, Colour, Sire, Dam, Tests, COI, Pedigree…" }
-          - { name: "value", label: "Right side", widget: "string",
-              hint: "For a pedigree just paste the PawPeds address. To make a link: Text|address" }
+          - { name: "label", label: "Left side", widget: "string", required: true,
+              hint: "Born, Colour, Tests, Sire, Dam, COI, Pedigree, Breeder…" }
+          - name: "value"
+            label: "Right side"
+            widget: "string"
+            required: false
+            hint: >-
+              Health tests are usually written like: 2025 · HD 0/0 · HCM N/N · PKD N/N.
+              For a pedigree just paste the PawPeds address. To make a link: Text|address.
+              Leave this empty and the whole line stays hidden on the website.
 
-      - { name: "bio", label: "Her story", widget: "text", required: false,
-          hint: "Leave one blank line between paragraphs." }
+      - { name: "bio", label: "About this cat", widget: "text", required: false,
+          hint: "Her story. Leave one blank line between paragraphs." }
       - { name: "award", label: "Highlighted line (optional)", widget: "string", required: false,
-          hint: "Shows in a gold box above the table." }
+          hint: "Shows in a gold box above the information table." }
 
-      # ─────────────── titles & awards
-      - { name: "has_titles", label: "This cat has titles or show results", widget: "boolean", default: false,
-          hint: "Turn this on to add a titles section to her page." }
-      - { name: "titles_heading", label: "Heading of that section", widget: "string", required: false,
+      # ─────────────── championship titles & show photos
+      - { name: "has_titles", label: "This cat has championship titles or show results", widget: "boolean", default: false,
+          hint: "Turn this on to add a gold championship section to her page." }
+      - { name: "titles_heading", label: "Heading of the championship section", widget: "string", required: false,
           default: "Titles & awards" }
       - name: "titles"
-        label: "The titles"
+        label: "Championship titles"
         label_singular: "title"
         widget: "list"
         required: false
+        collapsed: false
         summary: "{{title}} — {{detail}}"
         fields:
-          - { name: "title", label: "Title", widget: "string", hint: "Champion, Best Kitten, Best in Show…" }
+          - { name: "title", label: "Title", widget: "string", required: true,
+              hint: "Champion, Grand Champion, Best Kitten, Best in Show…" }
           - { name: "detail", label: "Where and when", widget: "string", required: false,
               hint: "TICA · 2026, or: Antwerp show, March 2026" }
       - name: "title_photos"
-        label: "Photos from the shows"
+        label: "Championship photos"
         label_singular: "photo"
         widget: "list"
         required: false
+        collapsed: false
+        summary: "{{alt}}"
+        hint: "Photos from the shows. Each one needs a picture; the short description is optional."
         fields:
-          - { name: "image", label: "Photo", widget: "image" }
-          - { name: "alt", label: "Short description", widget: "string", required: false }
-      - { name: "title_photos_cols", label: "Show photos per row", widget: "select", required: false,
+          - { name: "image", label: "Photo", widget: "image", required: true }
+          - { name: "alt", label: "Short description of the photo", widget: "string", required: false,
+              hint: "For people who cannot see the picture — for example: Prince at the Antwerp show." }
+      - { name: "title_photos_cols", label: "Championship photos per row", widget: "select", required: false,
           options: [{ label: "Three", value: "g3" }, { label: "Two", value: "g2" }, { label: "One big photo", value: "g1" }],
           default: "g3" }
 
       # ─────────────── ordinary gallery
       - name: "gallery"
-        label: "Photo gallery"
+        label: "Photos"
         label_singular: "photo"
         widget: "list"
         required: false
+        collapsed: false
+        summary: "{{alt}}"
+        hint: "The photo gallery further down her page. Each one needs a picture; the short description is optional."
         fields:
-          - { name: "image", label: "Photo", widget: "image" }
-          - { name: "alt", label: "Short description", widget: "string", required: false }
-      - { name: "gallery_caption", label: "Caption above the gallery", widget: "string", required: false }
+          - { name: "image", label: "Photo", widget: "image", required: true }
+          - { name: "alt", label: "Short description of the photo", widget: "string", required: false,
+              hint: "For people who cannot see the picture — for example: Prince and his polydactyl paws." }
+      - { name: "gallery_caption", label: "Caption above the photos", widget: "string", required: false }
       - { name: "gallery_cols", label: "Photos per row", widget: "select", required: false,
           options: [{ label: "Three", value: "g3" }, { label: "Two", value: "g2" }, { label: "One big photo", value: "g1" }],
           default: "g3" }
 
       # ─────────────── video
-      - { name: "video", label: "Video (optional)", widget: "file", required: false }
+      - { name: "video", label: "Video (optional)", widget: "file", required: false,
+          hint: "An MP4 file plays on every phone and computer. Films straight from an iPhone (.MOV) may not play for everyone." }
       - { name: "video_poster", label: "Cover picture for the video", widget: "image", required: false }
       - { name: "video_caption", label: "Caption under the video", widget: "string", required: false }
 
@@ -116,7 +153,8 @@ collections:
     summary: "{{title}}  ·  {{date}}"
     sortable_fields: ["order", "title"]
     fields:
-      - { name: "order", label: "Position in the list (0 = newest)", widget: "number", default: 0, value_type: "int" }
+      - { name: "order", label: "Position in the list (0 = top)", widget: "number", default: 0, value_type: "int",
+          hint: "Give every post its own number. The newest post is normally 0, the one below it 1, and so on." }
       - { name: "title", label: "Title", widget: "string" }
       - { name: "date", label: "Date", widget: "string", hint: "Written however you like: February 5, 2026" }
       - { name: "excerpt", label: "Short teaser", widget: "text",
@@ -147,6 +185,7 @@ collections:
             label: "The two buttons"
             widget: "list"
             max: 2
+            collapsed: false
             summary: "{{text}} → {{link}}"
             fields:
               - { name: "text", label: "Wording", widget: "string" }
@@ -157,10 +196,12 @@ collections:
             label: "Small logos under the buttons"
             widget: "list"
             required: false
+            collapsed: false
+            summary: "{{alt}}"
             fields:
-              - { name: "image", label: "Logo", widget: "image" }
-              - { name: "alt", label: "Description", widget: "string", required: false }
-              - { name: "style", label: "Extra styling", widget: "string", required: false }
+              - { name: "image", label: "Logo", widget: "image", required: true }
+              - { name: "alt", label: "Short description of the logo", widget: "string", required: false }
+              - { name: "style", label: "Extra styling (leave alone)", widget: "string", required: false }
           - { name: "about_icon", label: "About — icon", widget: "select",
               options: ["heart", "home", "food", "news", "basket", "tree", "roof", "cat", "paw", "star", "kitchen", "play"] }
           - { name: "about_title", label: "About — heading", widget: "string" }
@@ -171,6 +212,7 @@ collections:
           - name: "features"
             label: "The three little boxes"
             widget: "list"
+            collapsed: false
             summary: "{{title}}"
             fields:
               - { name: "icon", label: "Icon", widget: "select",
@@ -214,9 +256,11 @@ collections:
                 label_singular: "photo"
                 widget: "list"
                 required: false
+                collapsed: false
+                summary: "{{alt}}"
                 fields:
-                  - { name: "image", label: "Photo", widget: "image" }
-                  - { name: "alt", label: "Short description", widget: "string", required: false }
+                  - { name: "image", label: "Photo", widget: "image", required: true }
+                  - { name: "alt", label: "Short description of the photo", widget: "string", required: false }
               - { name: "cols", label: "Photos per row", widget: "select",
                   options: [{ label: "Three", value: "g3" }, { label: "Two", value: "g2" }, { label: "One big photo", value: "g1" }] }
 
@@ -244,9 +288,11 @@ collections:
                 label: "Photos"
                 label_singular: "photo"
                 widget: "list"
+                collapsed: false
+                summary: "{{alt}}"
                 fields:
-                  - { name: "image", label: "Photo", widget: "image" }
-                  - { name: "alt", label: "Short description", widget: "string", required: false }
+                  - { name: "image", label: "Photo", widget: "image", required: true }
+                  - { name: "alt", label: "Short description of the photo", widget: "string", required: false }
               - { name: "cols", label: "Photos per row", widget: "select",
                   options: [{ label: "Two", value: "g2" }, { label: "Three", value: "g3" }, { label: "One big photo", value: "g1" }] }
 

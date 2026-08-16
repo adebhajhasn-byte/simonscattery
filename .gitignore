@@ -1,3 +1,6 @@
 node_modules/
 .DS_Store
 *.log
+
+# Written fresh by every build; it stamps which deploy is live.
+site/version.json

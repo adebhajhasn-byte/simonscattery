@@ -7,11 +7,213 @@
 <title>Website editor — Simons Cattery</title>
 <link rel="icon" href="/images/cropped-logo-192x192.png">
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<style>
+  /* The little card in the corner that says what is happening after Publish.
+     It sits outside the editor, so it cannot disturb anything Decap draws. */
+  #pub-status{position:fixed;right:18px;bottom:18px;z-index:100000;max-width:340px;
+    display:none;padding:14px 16px;border-radius:10px;font:14px/1.45 -apple-system,
+    BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:#fff;color:#22301c;border:1px solid #dce2d0;
+    box-shadow:0 8px 28px rgba(40,44,34,.18)}
+  #pub-status.on{display:block}
+  #pub-status.busy{border-color:#dce2d0}
+  #pub-status.done{border-color:#869878;background:#f4f8ef}
+  #pub-status.warn{border-color:#bb7e56;background:#fdf6f0}
+  #pub-status.fail{border-color:#c0553f;background:#fdf1ee}
+  #pub-status .ps-row{display:flex;align-items:flex-start;gap:10px}
+  #pub-status .ps-msg{flex:1}
+  #pub-status b{display:block;margin-bottom:2px;font-weight:600}
+  #pub-status small{display:block;margin-top:2px;color:#5c6553}
+  #pub-status a{display:inline-block;margin-top:9px;color:#54664a;font-weight:600}
+  #pub-status .ps-close{background:none;border:0;cursor:pointer;font-size:17px;
+    line-height:1;color:#8c937f;padding:0 2px}
+  .ps-spin{flex:0 0 16px;width:16px;height:16px;margin-top:1px;border-radius:50%;
+    border:2px solid #dce2d0;border-top-color:#869878;animation:ps-turn .8s linear infinite}
+  .ps-mark{flex:0 0 16px;font-size:15px;line-height:1.1}
+  @keyframes ps-turn{to{transform:rotate(360deg)}}
+</style>
 </head>
 <body>
+
+<div id="pub-status" role="status" aria-live="polite">
+  <div class="ps-row">
+    <div class="ps-icon"></div>
+    <div class="ps-msg"></div>
+    <button class="ps-close" type="button" aria-label="Close">&times;</button>
+  </div>
+</div>
+
 <script src="https://unpkg.com/decap-cms@^3.9.0/dist/decap-cms.js"></script>
 <script>
-  // After accepting the e-mail invitation, land straight in the editor.
+(function () {
+  'use strict';
+
+  var SITE = 'https://simonscattery.be';
+  var VIEW = '<a href="' + SITE + '" target="_blank" rel="noopener">View website &rarr;</a>';
+
+  /* ─────────────────────────────────────────── the little status card */
+
+  var box = document.getElementById('pub-status');
+  var icon = box.querySelector('.ps-icon');
+  var msg = box.querySelector('.ps-msg');
+  box.querySelector('.ps-close').addEventListener('click', function () {
+    box.className = '';
+  });
+
+  function show(kind, title, detail, link) {
+    box.className = 'on ' + kind;
+    icon.className = 'ps-icon ' + (kind === 'busy' ? 'ps-spin' : 'ps-mark');
+    icon.textContent = kind === 'done' ? '✓' : (kind === 'busy' ? '' : '!');
+    msg.innerHTML = '<b></b>' + (detail ? '<small></small>' : '') + (link ? VIEW : '');
+    msg.querySelector('b').textContent = title;
+    if (detail) msg.querySelector('small').textContent = detail;
+  }
+
+  /* ───────────────────────────── has the new website actually gone live? */
+
+  /* Every build writes /version.json with a stamp of that deploy. Watching it
+     change is the one thing we can check from here that really means the new
+     website is being served — no guessing, no countdown. */
+  function readVersion() {
+    return fetch('/version.json?t=' + Date.now(), { cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) { return (j && j.deploy) || null; })
+      .catch(function () { return null; });
+  }
+
+  var liveBefore = null;    // the deploy that was live before this save
+  var watching = false;
+
+  readVersion().then(function (v) { liveBefore = v; });
+
+  /* Wait for the stamp to change. If we cannot tell — the file is missing, the
+     network is unhappy, the build is taking unusually long — we say what we
+     honestly know instead of claiming the website is live. */
+  function watchForDeploy() {
+    if (watching) return;
+    watching = true;
+
+    var startedAt = Date.now();
+    var LIMIT = 6 * 60 * 1000;   // after this we stop claiming anything
+    var EVERY = 3000;
+    var buildingShown = false;
+    var failures = 0;
+
+    (function poll() {
+      if (Date.now() - startedAt > LIMIT) {
+        watching = false;
+        return unsure();
+      }
+      readVersion().then(function (now) {
+        if (now === null) {
+          if (++failures >= 5) { watching = false; return unsure(); }
+        } else {
+          failures = 0;
+          if (liveBefore === null) {
+            // Never had a reading to compare against, so a change is not
+            // something we can detect. Do not pretend otherwise.
+            watching = false;
+            return unsure();
+          }
+          if (now !== liveBefore) {
+            liveBefore = now;
+            watching = false;
+            return show('done', 'Published — your website is live.',
+              'Your changes are now on simonscattery.be.', true);
+          }
+          if (!buildingShown && Date.now() - startedAt > 6000) {
+            buildingShown = true;
+            show('busy', 'Building your website…',
+              'Your changes are saved. This usually takes about 30 seconds.');
+          }
+        }
+        setTimeout(poll, EVERY);
+      });
+    })();
+  }
+
+  function unsure() {
+    show('warn', 'Your changes have been published.',
+      'The website is updating now. This usually takes about 30 seconds — ' +
+      'open it in a moment and refresh the page.', true);
+  }
+
+  /* ─────────────────────────────────────────────── hook into the editor */
+
+  var saveInFlight = false;
+  var publishClickedAt = 0;
+  var lastSavedAt = 0;
+
+  /* Knowing that Publish was pressed lets us tell a real failed save from the
+     ordinary background noise of a web app, so the warning below only appears
+     when it means something. */
+  document.addEventListener('click', function (ev) {
+    var el = ev.target;
+    for (var i = 0; el && i < 4; i++, el = el.parentElement) {
+      var t = (el.textContent || '').trim();
+      if (t && t.length < 40 && /publish/i.test(t)) { publishClickedAt = Date.now(); return; }
+    }
+  }, true);
+
+  function connect(CMS) {
+    CMS.registerEventListener({
+      name: 'preSave',
+      handler: function () {
+        saveInFlight = true;
+        show('busy', 'Saving your changes…');
+        // Re-read now, before the change is written, so we know exactly what
+        // was live beforehand and can spot the new version arriving.
+        readVersion().then(function (v) { if (v !== null) liveBefore = v; });
+        return undefined;   // never modify what is being saved
+      }
+    });
+
+    CMS.registerEventListener({
+      name: 'postSave',
+      handler: function () {
+        saveInFlight = false;
+        lastSavedAt = Date.now();
+        show('busy', 'Publishing…', 'Sending your changes to the website.');
+        watchForDeploy();
+        return undefined;
+      }
+    });
+  }
+
+  var tries = 0;
+  (function waitForCMS() {
+    if (window.CMS && window.CMS.registerEventListener) return connect(window.CMS);
+    if (++tries < 100) setTimeout(waitForCMS, 100);
+  })();
+
+  /* ───────────────────────── never let a failure pass without saying so */
+
+  /* A save that breaks somewhere inside the editor used to do nothing at all —
+     no message, no commit — and looked exactly like a save that worked. Anything
+     that goes wrong now says so, so nobody is left believing a change was
+     published when it was not. */
+  function saveFailed() {
+    // Only speak up when a save was actually under way, so an unrelated hiccup
+    // never accuses the editor of losing work it never had.
+    var justPressedPublish = Date.now() - publishClickedAt < 15000;
+    var thatOneSucceeded = lastSavedAt > publishClickedAt;
+    if (!saveInFlight && !(justPressedPublish && !thatOneSucceeded)) return;
+
+    saveInFlight = false;
+    watching = false;
+    show('fail', 'Something went wrong — your changes were not published.',
+      'Nothing you typed has been lost. Please press Publish once more. If it ' +
+      'keeps happening, take a screenshot of this page and send it on.');
+  }
+
+  window.addEventListener('error', function (ev) {
+    if (ev && ev.target && ev.target !== window) return;   // ignore missing images etc.
+    saveFailed();
+  });
+  window.addEventListener('unhandledrejection', saveFailed);
+
+  /* ───────────────── e-mail invitation and password reset land on the site */
+
   if (window.netlifyIdentity) {
     window.netlifyIdentity.on('init', function (user) {
       if (!user) {
@@ -21,6 +223,7 @@
       }
     });
   }
+})();
 </script>
 </body>
 </html>
