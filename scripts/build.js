@@ -13,12 +13,21 @@ const OUT = path.join(ROOT, 'site');
 /* ─────────────────────────────────────────────────────────── helpers */
 
 const read = (p) => JSON.parse(fs.readFileSync(p, 'utf8'));
+
+/* Anything the editor saved in a shape the pages cannot use is collected here
+   and printed at the end of the build, so a problem is never silent. */
+const warnings = new Set();
+const warn = (msg) => warnings.add(msg);
+
+/* Two entries with the same position used to be ordered by whatever order the
+   file system happened to hand back, which differs between computers. Falling
+   back to the file name makes every build produce the same page. */
 const readDir = (dir) =>
   fs.existsSync(path.join(CONTENT, dir))
     ? fs.readdirSync(path.join(CONTENT, dir))
         .filter((f) => f.endsWith('.json'))
         .map((f) => ({ slug: f.replace(/\.json$/, ''), ...read(path.join(CONTENT, dir, f)) }))
-        .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+        .sort((a, b) => (a.order ?? 0) - (b.order ?? 0) || a.slug.localeCompare(b.slug))
     : [];
 
 const e = (s) =>
@@ -52,11 +61,26 @@ const img = (p) => String(p ?? '').replace(/^\/+/, '');
  * A photo in a list can arrive in two shapes, depending on how the editor
  * saved it: a bare path ("/images/x.jpg") or an object ({image, alt}).
  * Read both, so a photo added from the editor is never dropped.
+ *
+ * The editor itself only writes the object shape. A bare path means the file
+ * still holds data from before the photo lists gained a description field —
+ * the editor cannot save such a file at all, so say so loudly.
  */
 const photoSrc = (it) =>
   typeof it === 'string' ? it : (it && (it.image || it.src)) || '';
 const photoAlt = (it) =>
   (it && typeof it === 'object' && (it.alt || '')) || '';
+
+const checkPhotos = (where, items) => {
+  (items || []).forEach((it, i) => {
+    if (typeof it === 'string') {
+      warn(`${where}[${i}] is a bare path — the editor cannot save this entry. ` +
+        `Change it to { "image": "${it}", "alt": "" }.`);
+    } else if (!photoSrc(it)) {
+      warn(`${where}[${i}] has no picture and will be skipped.`);
+    }
+  });
+};
 
 const write = (name, html) => {
   fs.writeFileSync(path.join(OUT, name), html);
@@ -152,16 +176,36 @@ const gallery = (cols, images, fallbackAlt = '') => {
 
 /* ────────────────────────────────────────────────────────────── cats */
 
+/* The championship badges, in one place so the card and the page agree.
+   `none`, empty and missing all mean "no badge". */
+const BADGES = {
+  champion: { label: 'Champion', crown: true, card: '', page: 'gold' },
+  grand_champion: { label: 'Grand Champion', crown: true, card: 'gc', page: 'gold gc' },
+  neutered: { label: 'Neutered', crown: false, card: 'neu', page: 'clay' },
+};
+
+const badgeFor = (cat) => {
+  const key = cat.badge || 'none';
+  if (key === 'none') return null;
+  if (!BADGES[key]) {
+    warn(`${cat.slug}: unknown championship badge "${key}" — no badge is shown. ` +
+      `Known values: ${Object.keys(BADGES).join(', ')}.`);
+    return null;
+  }
+  return BADGES[key];
+};
+
+const crownSvg = (group) =>
+  `<svg viewBox="0 0 24 24" fill="currentColor"><path d="${
+    group === 'king' ? CROWN_KING : CROWN_QUEEN}"/></svg>`;
+
 const catCard = (cat) => {
   const group = cat.group || 'queen';
   const href = cat.has_page ? `cat-${cat.slug}.html` : (group === 'king' ? 'kings.html' : 'queens.html');
-  let badge = '';
-  if (cat.badge === 'champion') {
-    badge = `<span class="badge"><svg viewBox="0 0 24 24" fill="currentColor"><path d="${
-      group === 'king' ? CROWN_KING : CROWN_QUEEN}"/></svg>Champion</span>`;
-  } else if (cat.badge === 'neutered') {
-    badge = '<span class="badge neu">Neutered</span>';
-  }
+  const b = badgeFor(cat);
+  const badge = b
+    ? `<span class="badge${b.card ? ' ' + b.card : ''}">${b.crown ? crownSvg(group) : ''}${b.label}</span>`
+    : '';
   const cardName = (cat.card_name || cat.name).trim();
   const alt = cardName.replace(/\n/g, ' ');
   return `<a class="card reveal" href="${href}"><div class="frame"><div class="ph">` +
@@ -204,6 +248,25 @@ const VIDEO_CSS =
   ' border:1px solid var(--line-soft);box-shadow:var(--shadow-lg);background:#000}\n' +
   '.vidwrap video{width:100%;display:block}\n</style>';
 
+/* The <source> type has to match the actual file. Saying "video/mp4" about a
+   film straight off an iPhone (.MOV) is what made Harriette's video refuse to
+   play in some browsers. Only formats every browser understands are safe. */
+const VIDEO_TYPES = {
+  mp4: 'video/mp4', m4v: 'video/mp4', webm: 'video/webm', ogv: 'video/ogg', ogg: 'video/ogg',
+  mov: 'video/quicktime', qt: 'video/quicktime', avi: 'video/x-msvideo', mkv: 'video/x-matroska',
+};
+const WEB_SAFE_VIDEO = new Set(['mp4', 'm4v', 'webm']);
+
+const videoType = (file, who) => {
+  const ext = String(file ?? '').split('.').pop().toLowerCase();
+  if (!WEB_SAFE_VIDEO.has(ext)) {
+    warn(`${who}: the video "${file}" is a .${ext} file. Convert it to MP4 — ` +
+      `not every browser can play this format.`);
+  }
+  // No type at all is better than a wrong one: the browser then sniffs the file.
+  return VIDEO_TYPES[ext] ? ` type="${VIDEO_TYPES[ext]}"` : '';
+};
+
 /** Table values: plain text, a bare URL, or "Label|target". */
 const rowValue = (v) => {
   v = String(v ?? '').trim();
@@ -230,11 +293,11 @@ const catPage = (cat, contact) => {
   const group = cat.group || 'queen';
   const role = group === 'king' ? 'King' : 'Queen';
   let badges = `<span class="tagbadge">${role}</span>`;
-  if (cat.badge === 'champion') {
-    badges += `<span class="tagbadge gold"><svg viewBox="0 0 24 24" fill="currentColor">` +
-      `<path d="${CROWN_KING}"/></svg>Champion</span>`;
-  } else if (cat.badge === 'neutered') {
-    badges += '<span class="tagbadge clay">Neutered</span>';
+  const b = badgeFor(cat);
+  if (b) {
+    badges += `<span class="tagbadge ${b.page}">` +
+      (b.crown ? `<svg viewBox="0 0 24 24" fill="currentColor"><path d="${CROWN_KING}"/></svg>` : '') +
+      `${b.label}</span>`;
   }
 
   const rows = (cat.rows || [])
@@ -288,7 +351,7 @@ const catPage = (cat, contact) => {
       (cap ? `<p class="cap reveal">${e(cap)}</p>` : '') +
       `<div class="vidwrap reveal"><video controls preload="none" playsinline` +
       (cat.video_poster ? ` poster="${e(img(cat.video_poster))}"` : '') +
-      `><source src="${e(img(cat.video))}" type="video/mp4">` +
+      `><source src="${e(img(cat.video))}"${videoType(cat.video, cat.slug)}>` +
       `Your browser does not support the video tag.</video></div></section>`;
   }
 
@@ -321,6 +384,7 @@ const homePage = (h, posts, contact) => {
       `${i > 0 ? ' style="margin-left:10px"' : ''}>${e(b.text)}</a>\n    `)
     .join('');
 
+  checkPhotos('home page: small logos', h.badges);
   const badges = (h.badges || [])
     .filter((b) => photoSrc(b))
     .map((b) => `\n    <img src="${e(img(photoSrc(b)))}" alt="${e(photoAlt(b))}"` +
@@ -364,6 +428,7 @@ const homePage = (h, posts, contact) => {
 
 const kittensPage = (k, contact) => {
   const out = (k.litters || []).map((l) => {
+    checkPhotos(`kittens page: ${l.title || 'litter'} photos`, l.images);
     const pill = `<span class="pill${l.status_off ? ' off' : ''}">${e(l.status)}</span>`;
     const style = String(l.text_style ?? '').trim() || 'color:var(--ink-soft)';
     const text = String(l.text ?? '').trim()
@@ -382,8 +447,10 @@ const kittensPage = (k, contact) => {
 };
 
 const areaPage = (a, contact) => {
-  const out = (a.sections || []).map((s) =>
-    `\n  <section>\n    ${shead(s.icon, s.title)}\n    ${gallery(s.cols, s.images)}\n  </section>\n`).join('');
+  const out = (a.sections || []).map((s) => {
+    checkPhotos(`our area page: ${s.title || 'section'} photos`, s.images);
+    return `\n  <section>\n    ${shead(s.icon, s.title)}\n    ${gallery(s.cols, s.images)}\n  </section>\n`;
+  }).join('');
   return head(e(a.title_tag), '', 'our-area.html') +
     `<header class="phead wrap">\n  <p class="kick">${e(a.kick)}</p>\n` +
     `  <h1>${eHeading(a.title)}</h1>\n  <p class="lead">${e(a.lead)}</p>\n` +
@@ -438,6 +505,13 @@ const ourCatsPage = (cats, contact) => {
 
 const cats = readDir('cats');
 const posts = readDir('posts');
+
+/* Check every cat, including the ones without a page of their own — the editor
+   has to be able to open and save those too. */
+for (const c of cats) {
+  checkPhotos(`${c.slug}: championship photos`, c.title_photos);
+  checkPhotos(`${c.slug}: photos`, c.gallery);
+}
 const P = (n) => read(path.join(CONTENT, 'pages', n + '.json'));
 const contact = P('contact');
 
@@ -473,4 +547,20 @@ for (const f of ['welfare.html', 'cat-princess.html']) {
   fs.writeFileSync(p, html);
 }
 
+/* A stamp of this build, so the editor can tell when the new version of the
+   website has actually gone live instead of guessing with a timer.
+   Netlify sets these; locally we fall back to the clock. */
+const stamp =
+  process.env.DEPLOY_ID || process.env.COMMIT_REF || `local-${Date.now()}`;
+fs.writeFileSync(
+  path.join(OUT, 'version.json'),
+  JSON.stringify({ deploy: stamp, built: new Date().toISOString() }, null, 2) + '\n',
+);
+
 console.log(`Built ${written.length} pages · ${cats.length} cats · ${posts.length} posts`);
+
+if (warnings.size) {
+  console.log(`\n⚠  ${warnings.size} thing${warnings.size > 1 ? 's' : ''} to look at:`);
+  for (const w of warnings) console.log(`   • ${w}`);
+  console.log('');
+}

@@ -1,6 +1,12 @@
 [build]
   command = "npm run build"
   publish = "site"
+  # A commit that only changes the written notes cannot change the website,
+  # so there is nothing to rebuild. Anything else — content, photos, the build
+  # script, the editor — builds as usual. If the previous commit is unknown
+  # this command fails, and a failing command means "build", which is the safe
+  # side to land on.
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- . ':(exclude)*.md' ':(exclude).idea/'"
 
 [build.environment]
   NODE_VERSION = "20"
@@ -11,8 +17,20 @@
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
 
-# Photos and the video rarely change — let browsers keep them.
+# Photos and the video used to be kept by the browser for a week. That meant a
+# photo replaced under the same name went on showing the old picture for days,
+# with no way to hurry it along. Now the browser checks first every time: if the
+# picture has not changed the server answers "still the same" and nothing is
+# downloaded, so this stays just as cheap — but a replaced photo shows up the
+# moment the new version of the site is live.
 [[headers]]
   for = "/images/*"
   [headers.values]
-    Cache-Control = "public, max-age=604800"
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# The editor reads this file to tell when a new version of the website has
+# actually gone live, so it must never come from a cache.
+[[headers]]
+  for = "/version.json"
+  [headers.values]
+    Cache-Control = "no-store"
