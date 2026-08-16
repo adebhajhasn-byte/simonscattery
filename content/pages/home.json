@@ -14,7 +14,7 @@
   ],
   "news_count": 3,
   "news_icon": "news",
-  "kick": "Welcome to our home",
+  "kick": "Welcome to our ho",
   "about_title": "About <em>us</em>",
   "about_icon": "heart",
   "news_title": "Latest <em>news</em>",
@@ -36,7 +36,7 @@
       "style": "height:54px"
     }
   ],
-  "title_tag": "Simons Cattery — Maine Coon · Belgiu",
+  "title_tag": "Simons Cattery — Maine Coon · Belgium",
   "news_all_text": "All blog posts",
   "title": "Simons <em style=\"font-style:italic;color:var(--sage-deep)\">Cattery</em>",
   "about_link_url": "https://catlife.be/",
