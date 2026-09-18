@@ -5,13 +5,12 @@
   "lead": "News from the nursery — current litters, upcoming matings, and our most recent babies.",
   "litters": [
     {
-      "icon": "heart",
-      "title": "Simons Harriette <em>&amp;</em> Adelheids Gamerlan",
-      "status": "Available",
       "status_off": false,
-      "text": "First time mating. Kittens were born <strong>9 / 11</strong>. We have <strong>4 boys and 1 girl</strong>.",
       "meta": "",
+      "text": "First time mating. Kittens were born <strong>9 / 11</strong>. We have <strong>4 boys and 1 girl</strong>.",
+      "status": "Available",
       "cols": "g3",
+      "title": "Simons Harriette <em>&amp;</em> Adelheids Gamerlan",
       "images": [
         {
           "image": "/images/567677673_1269990488504413_7228613215582733391_n-912x1024.jpg",
@@ -42,16 +41,16 @@
           "alt": "Tabby boy 2"
         }
       ],
+      "icon": "heart",
       "text_style": "color:var(--ink-soft)"
     },
     {
-      "icon": "heart",
-      "title": "Child of Maine P Montgomery <em>×</em> Pownee’s Princess",
-      "status": "New pair",
       "status_off": false,
-      "text": "Our two new cats — first time mating. <span class=\"note\">19 / 06 / 2025</span>",
       "meta": "Parents:\n        <a href=\"cat-montgomery.html\">Child of Maine P Montgomery</a> &nbsp;·&nbsp;\n        <a href=\"cat-princess.html\">Pownee’s Princess</a>",
+      "text": "Our two new cats — first time mating. <span class=\"note\">19 / 06 / 2025</span>",
+      "status": "New pair",
       "cols": "g3",
+      "title": "Child of Maine P Montgomery <em>×</em> Pownee’s Princess",
       "images": [
         {
           "image": "/images/IMG_5140-768x1024.jpeg",
@@ -98,16 +97,16 @@
           "alt": "Kitten"
         }
       ],
+      "icon": "heart",
       "text_style": "color:var(--ink-soft)"
     },
     {
-      "icon": "basket",
-      "title": "Our <em>last litter</em>",
-      "status": "Not available",
       "status_off": true,
-      "text": "<strong>Simons Lord Byron</strong> · <strong>Simons Life’s Dream</strong> · <strong>Simons Lollypop</strong>",
       "meta": "Mama: <a href=\"cat-ephiphany.html\">Adelheids Ephiphany</a> &nbsp;·&nbsp;\n        Papa: <a href=\"cat-montgomery.html\">Child of Maine P Montgomery</a>",
+      "text": "<strong>Simons Lord Byron</strong> · <strong>Simons Life’s Dream</strong> · <strong>Simons Lollypop</strong>",
+      "status": "Not available",
       "cols": "g3",
+      "title": "Our <em>last litter</em>",
       "images": [
         {
           "image": "/images/att.GRI3hOgq7NTiadk5MeWSoznoeub1v9rqh5Ej5Jbk6jg.jpeg",
@@ -122,7 +121,21 @@
           "alt": "Kitten"
         }
       ],
+      "icon": "basket",
       "text_style": "color:var(--ink-soft);margin-bottom:6px"
+    },
+    {
+      "status_off": false,
+      "icon": "heart",
+      "title": "Simons Harriette <em>&amp;</em> Child of Maine P Montgomery",
+      "text": "WINTER",
+      "status": "New pair",
+      "cols": "g2",
+      "images": [
+        {
+          "image": "/images/567677673_1269990488504413_7228613215582733391_n-912x1024.jpg"
+        }
+      ]
     }
   ]
 }
