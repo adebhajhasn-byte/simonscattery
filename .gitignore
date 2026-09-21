@@ -2,5 +2,14 @@ node_modules/
 .DS_Store
 *.log
 
-# Written fresh by every build; it stamps which deploy is live.
-site/version.json
+# Everything below is written fresh by `npm run build` from content/*.json —
+# never edited by hand, and Netlify always rebuilds it before publishing, so
+# keeping it in git only means it can go stale between edits and show up as
+# noise (or a conflict) in every diff. The static parts of site/ — admin/,
+# images/, style.css, app.js, robots.txt — are unaffected and stay tracked.
+/site/*.html
+/site/version.json
+
+# welfare.html is hand-written, not generated, and build.js knows to leave it
+# alone — so unlike the rest of site/*.html it belongs in git if it's ever added.
+!/site/welfare.html

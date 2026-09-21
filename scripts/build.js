@@ -76,8 +76,20 @@ const checkPhotos = (where, items) => {
     if (typeof it === 'string') {
       warn(`${where}[${i}] is a bare path — the editor cannot save this entry. ` +
         `Change it to { "image": "${it}", "alt": "" }.`);
-    } else if (!photoSrc(it)) {
+      return;
+    }
+    const src = photoSrc(it);
+    if (!src) {
       warn(`${where}[${i}] has no picture and will be skipped.`);
+    } else if (/^https?:\/\//i.test(src)) {
+      /* A link pasted straight from Facebook or another site, instead of an
+         upload. These carry their own expiry and go dead on their own
+         schedule — that is exactly how Prince's two award photos silently
+         broke. The editor's image picker never produces this; it always
+         uploads into /images and saves a local path. */
+      warn(`${where}[${i}] points to an outside website (${src.slice(0, 60)}…) instead ` +
+        `of an uploaded photo. Outside links like this can stop working with no warning. ` +
+        `Re-add it with the editor's photo picker so it is uploaded here instead.`);
     }
   });
 };
