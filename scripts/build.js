@@ -12,12 +12,41 @@ const OUT = path.join(ROOT, 'site');
 
 /* ─────────────────────────────────────────────────────────── helpers */
 
-const read = (p) => JSON.parse(fs.readFileSync(p, 'utf8'));
+/* A file that cannot even be read as JSON means the editor is broken for
+   whoever opens it next — Decap would refuse to load it too. Naming the
+   exact file here, instead of letting a raw parse error bubble up, is the
+   difference between a build log that says what to fix and one that just
+   says "Unexpected token" with no file attached. */
+const read = (p) => {
+  let raw;
+  try {
+    raw = fs.readFileSync(p, 'utf8');
+  } catch (err) {
+    throw new Error(`Cannot read ${path.relative(ROOT, p)}: ${err.message}`);
+  }
+  try {
+    return JSON.parse(raw);
+  } catch (err) {
+    throw new Error(`${path.relative(ROOT, p)} is not valid JSON (${err.message}). ` +
+      `The editor would refuse to open this entry until it is fixed by hand.`);
+  }
+};
 
-/* Anything the editor saved in a shape the pages cannot use is collected here
-   and printed at the end of the build, so a problem is never silent. */
+/* Two kinds of problem, kept apart on purpose.
+   A WARNING is something the site already renders around safely — an empty
+   optional field, an unknown badge, a photo that will show twice. These are
+   printed so they don't go unnoticed, but they never stop a publish; Lucie
+   should never be blocked from shipping today's edit by an unrelated,
+   already-cosmetic issue somewhere else on the site.
+   A FATAL problem is one the site cannot render around — a picture or video
+   that points at a file which does not exist, or content that is not valid
+   JSON at all. Those stop the build (a non-zero exit code), so Netlify keeps
+   the last working version live instead of replacing it with something
+   visibly broken. */
 const warnings = new Set();
 const warn = (msg) => warnings.add(msg);
+const errors = new Set();
+const fatal = (msg) => errors.add(msg);
 
 /* Two entries with the same position used to be ordered by whatever order the
    file system happened to hand back, which differs between computers. Falling
@@ -71,14 +100,65 @@ const photoSrc = (it) =>
 const photoAlt = (it) =>
   (it && typeof it === 'object' && (it.alt || '')) || '';
 
+/* Does a local path the editor saved actually correspond to a real file?
+   A missing picture or video shows nothing at all in the browser — worse
+   than any other problem checked here, and unlike the others there is no
+   plausible legitimate reason for it (the editor's own upload keeps the
+   file and the path in step), so this one is fatal rather than a warning.
+   Empty values and outside links are somebody else's check, not this one's. */
+const checkAsset = (where, value) => {
+  const v = String(value ?? '').trim();
+  if (!v || /^https?:\/\//i.test(v)) return;
+  if (!fs.existsSync(path.join(OUT, img(v)))) {
+    fatal(`${where} points at "${v}", but no such file exists in site/images. ` +
+      `The page would show a broken picture or a dead video link.`);
+  }
+};
+
+/* A "Label|target" table value might point at a page that no longer exists —
+   the cat it named was renamed or removed elsewhere. The visitor just gets a
+   dead link, not a broken page, and it is very often not even a mistake made
+   in the entry that holds it — so this warns rather than blocking a publish
+   that has nothing to do with the stale reference. Populated once every cat
+   and post is known; see below. */
+let KNOWN_PAGES = null;
+const checkInternalLink = (where, target) => {
+  target = String(target ?? '').trim();
+  if (!target || !KNOWN_PAGES || !/^[\w-]+\.html$/i.test(target)) return;
+  if (!KNOWN_PAGES.has(target)) {
+    warn(`${where} links to "${target}", which is not a page on the site (renamed or removed?).`);
+  }
+};
+
 const checkPhotos = (where, items) => {
+  const seen = new Set();
   (items || []).forEach((it, i) => {
     if (typeof it === 'string') {
       warn(`${where}[${i}] is a bare path — the editor cannot save this entry. ` +
         `Change it to { "image": "${it}", "alt": "" }.`);
-    } else if (!photoSrc(it)) {
-      warn(`${where}[${i}] has no picture and will be skipped.`);
+      return;
     }
+    const src = photoSrc(it);
+    if (!src) {
+      warn(`${where}[${i}] has no picture and will be skipped.`);
+      return;
+    }
+    if (/^https?:\/\//i.test(src)) {
+      /* A link pasted straight from Facebook or another site, instead of an
+         upload. These carry their own expiry and go dead on their own
+         schedule — that is exactly how Prince's two award photos silently
+         broke. The editor's image picker never produces this; it always
+         uploads into /images and saves a local path. */
+      warn(`${where}[${i}] points to an outside website (${src.slice(0, 60)}…) instead ` +
+        `of an uploaded photo. Outside links like this can stop working with no warning. ` +
+        `Re-add it with the editor's photo picker so it is uploaded here instead.`);
+      return;
+    }
+    checkAsset(`${where}[${i}]`, src);
+    if (seen.has(src)) {
+      warn(`${where}[${i}] is the same photo as an earlier one in this list (${src}) — it will show twice.`);
+    }
+    seen.add(src);
   });
 };
 
@@ -482,7 +562,7 @@ const postPage = (p, contact) => {
     `  </article>\n</main>\n` + tail(contact);
 };
 
-const OURCATS = JSON.parse(fs.readFileSync(path.join(CONTENT, 'pages', '_ourcats.json'), 'utf8'));
+const OURCATS = read(path.join(CONTENT, 'pages', '_ourcats.json'));
 
 const ourCatsPage = (cats, contact) => {
   const n = (g) => cats.filter((c) => (c.group || 'queen') === g && c.show_on_card !== false).length;
@@ -503,64 +583,131 @@ const ourCatsPage = (cats, contact) => {
 
 /* ─────────────────────────────────────────────────────────── build */
 
-const cats = readDir('cats');
-const posts = readDir('posts');
+/* Everything from here down runs inside one try/catch. Content that cannot
+   even be parsed, or a page that throws while being built, used to crash the
+   whole process with a raw stack trace and no indication of which file was
+   responsible. Now it is reported the same way every other problem here is —
+   clearly, by name — and the build fails on purpose rather than by accident. */
+try {
+  const cats = readDir('cats');
+  const posts = readDir('posts');
 
-/* Check every cat, including the ones without a page of their own — the editor
-   has to be able to open and save those too. */
-for (const c of cats) {
-  checkPhotos(`${c.slug}: championship photos`, c.title_photos);
-  checkPhotos(`${c.slug}: photos`, c.gallery);
-}
-const P = (n) => read(path.join(CONTENT, 'pages', n + '.json'));
-const contact = P('contact');
+  /* Every page that will actually exist once this build finishes — used by
+     checkInternalLink so a stale cross-reference (a renamed or deleted cat)
+     can be caught instead of quietly becoming a dead link. */
+  KNOWN_PAGES = new Set([
+    'index.html', 'kittens.html', 'our-area.html', 'blog.html', 'our-cats.html',
+    'kings.html', 'queens.html', 'welfare.html',
+    ...cats.filter((c) => c.has_page).map((c) => `cat-${c.slug}.html`),
+    ...posts.map((p) => `post-${p.slug}.html`),
+  ]);
 
-const written = [];
-written.push(write('index.html', homePage(P('home'), posts, contact)));
-written.push(write('kittens.html', kittensPage(P('kittens'), contact)));
-written.push(write('our-area.html', areaPage(P('area'), contact)));
-written.push(write('blog.html', blogPage(P('blog'), posts, contact)));
-written.push(write('our-cats.html', ourCatsPage(cats, contact)));
-written.push(write('kings.html', gridPage(cats, 'king', contact)));
-written.push(write('queens.html', gridPage(cats, 'queen', contact)));
+  /* Check every cat, including the ones without a page of their own — the
+     editor has to be able to open and save those too. */
+  for (const c of cats) {
+    checkPhotos(`${c.slug}: championship photos`, c.title_photos);
+    checkPhotos(`${c.slug}: photos`, c.gallery);
+    checkAsset(`${c.slug}: main photo`, c.photo);
+    checkAsset(`${c.slug}: list photo`, c.card_photo);
+    checkAsset(`${c.slug}: video`, c.video);
+    checkAsset(`${c.slug}: video cover picture`, c.video_poster);
+    (c.rows || []).forEach((r) => {
+      const v = String(r.value ?? '').trim();
+      if (v.includes('|')) checkInternalLink(`${c.slug}: ${r.label || 'row'}`, v.split('|')[1].trim());
+    });
+  }
+  for (const p of posts) checkAsset(`${p.slug}: main picture`, p.image);
+  checkAsset('Our Cats cover photo (Kings)',
+    OURCATS.covers && OURCATS.covers.kings ? 'images/' + OURCATS.covers.kings : '');
+  checkAsset('Our Cats cover photo (Queens)',
+    OURCATS.covers && OURCATS.covers.queens ? 'images/' + OURCATS.covers.queens : '');
 
-for (const p of posts) written.push(write(`post-${p.slug}.html`, postPage(p, contact)));
-for (const c of cats) if (c.has_page) written.push(write(`cat-${c.slug}.html`, catPage(c, contact)));
+  const P = (n) => read(path.join(CONTENT, 'pages', n + '.json'));
+  const contact = P('contact');
 
-/* pages that are no longer in the content folder should not linger.
-   KEEP_AS_IS are hand-written pages that were never generated — they are
-   still linked to, so they must survive a rebuild. */
-const KEEP_AS_IS = new Set(['welfare.html']);
-const keep = new Set(written);
-for (const f of fs.readdirSync(OUT)) {
-  if (!/^(cat|post)-.*\.html$/.test(f)) continue;
-  if (keep.has(f) || KEEP_AS_IS.has(f)) continue;
-  fs.unlinkSync(path.join(OUT, f));
-  console.log('  removed', f);
-}
+  const written = [];
+  written.push(write('index.html', homePage(P('home'), posts, contact)));
+  written.push(write('kittens.html', kittensPage(P('kittens'), contact)));
+  written.push(write('our-area.html', areaPage(P('area'), contact)));
+  written.push(write('blog.html', blogPage(P('blog'), posts, contact)));
+  written.push(write('our-cats.html', ourCatsPage(cats, contact)));
+  written.push(write('kings.html', gridPage(cats, 'king', contact)));
+  written.push(write('queens.html', gridPage(cats, 'queen', contact)));
 
-/* the two hand-kept pages still need the current footer */
-for (const f of ['welfare.html', 'cat-princess.html']) {
-  const p = path.join(OUT, f);
-  if (!fs.existsSync(p)) continue;
-  const html = fs.readFileSync(p, 'utf8').replace(/<footer>[\s\S]*?<\/footer>/, footer(contact));
-  fs.writeFileSync(p, html);
-}
+  /* One bad entry should not take the rest of the site down with it. Each
+     post and cat is built on its own, so a real problem in one of them is
+     reported by name and the rest of the build still runs to completion —
+     one run now tells the whole story instead of stopping at the first
+     surprise. A failed entry keeps whatever page it had from the last
+     successful build rather than losing it, since there is no reason to
+     delete a working page over a mistake somewhere else entirely. The build
+     still fails overall either way (see the exit code below), so none of
+     this ships until it is fixed. */
+  const failedFiles = new Set();
+  for (const p of posts) {
+    try {
+      written.push(write(`post-${p.slug}.html`, postPage(p, contact)));
+    } catch (err) {
+      fatal(`Could not build the post "${p.slug}": ${err.message}`);
+      failedFiles.add(`post-${p.slug}.html`);
+    }
+  }
+  for (const c of cats) {
+    if (!c.has_page) continue;
+    try {
+      written.push(write(`cat-${c.slug}.html`, catPage(c, contact)));
+    } catch (err) {
+      fatal(`Could not build ${c.slug}'s page: ${err.message}`);
+      failedFiles.add(`cat-${c.slug}.html`);
+    }
+  }
 
-/* A stamp of this build, so the editor can tell when the new version of the
-   website has actually gone live instead of guessing with a timer.
-   Netlify sets these; locally we fall back to the clock. */
-const stamp =
-  process.env.DEPLOY_ID || process.env.COMMIT_REF || `local-${Date.now()}`;
-fs.writeFileSync(
-  path.join(OUT, 'version.json'),
-  JSON.stringify({ deploy: stamp, built: new Date().toISOString() }, null, 2) + '\n',
-);
+  /* pages that are no longer in the content folder should not linger.
+     KEEP_AS_IS are hand-written pages that were never generated — they are
+     still linked to, so they must survive a rebuild. */
+  const KEEP_AS_IS = new Set(['welfare.html']);
+  const keep = new Set(written);
+  for (const f of fs.readdirSync(OUT)) {
+    if (!/^(cat|post)-.*\.html$/.test(f)) continue;
+    if (keep.has(f) || KEEP_AS_IS.has(f) || failedFiles.has(f)) continue;
+    fs.unlinkSync(path.join(OUT, f));
+    console.log('  removed', f);
+  }
 
-console.log(`Built ${written.length} pages · ${cats.length} cats · ${posts.length} posts`);
+  /* the two hand-kept pages still need the current footer */
+  for (const f of ['welfare.html', 'cat-princess.html']) {
+    const p = path.join(OUT, f);
+    if (!fs.existsSync(p)) continue;
+    const html = fs.readFileSync(p, 'utf8').replace(/<footer>[\s\S]*?<\/footer>/, footer(contact));
+    fs.writeFileSync(p, html);
+  }
 
-if (warnings.size) {
-  console.log(`\n⚠  ${warnings.size} thing${warnings.size > 1 ? 's' : ''} to look at:`);
-  for (const w of warnings) console.log(`   • ${w}`);
-  console.log('');
+  /* A stamp of this build, so the editor can tell when the new version of the
+     website has actually gone live instead of guessing with a timer.
+     Netlify sets these; locally we fall back to the clock. */
+  const stamp =
+    process.env.DEPLOY_ID || process.env.COMMIT_REF || `local-${Date.now()}`;
+  fs.writeFileSync(
+    path.join(OUT, 'version.json'),
+    JSON.stringify({ deploy: stamp, built: new Date().toISOString() }, null, 2) + '\n',
+  );
+
+  console.log(`Built ${written.length} pages · ${cats.length} cats · ${posts.length} posts`);
+
+  if (warnings.size) {
+    console.log(`\n⚠  ${warnings.size} thing${warnings.size > 1 ? 's' : ''} to look at:`);
+    for (const w of warnings) console.log(`   • ${w}`);
+    console.log('');
+  }
+
+  if (errors.size) {
+    console.log(`\n✗ BUILD FAILED — ${errors.size} thing${errors.size > 1 ? 's' : ''} would break the live site:`);
+    for (const msg of errors) console.log(`   • ${msg}`);
+    console.log('\nNothing was deployed — the website already live is untouched. Fix the above and publish again.\n');
+    process.exitCode = 1;
+  }
+} catch (err) {
+  console.log(`\n✗ BUILD FAILED — ${err.message}`);
+  console.log('\nNothing was deployed — the website already live is untouched. Fix the above and publish again.\n');
+  process.exitCode = 1;
 }
