@@ -1,12 +1,13 @@
 [build]
   command = "npm run build"
   publish = "site"
-  # A commit that only changes the written notes cannot change the website,
-  # so there is nothing to rebuild. Anything else — content, photos, the build
-  # script, the editor — builds as usual. If the previous commit is unknown
-  # this command fails, and a failing command means "build", which is the safe
-  # side to land on.
-  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- . ':(exclude)*.md' ':(exclude).idea/'"
+  # No `ignore` rule on purpose: every publish must build. An earlier version
+  # skipped builds when only notes changed, by comparing $CACHED_COMMIT_REF
+  # with $COMMIT_REF — but Netlify does not document what that variable holds
+  # when it has no earlier build to point at, and if it is empty the command
+  # compares the checkout with itself, exits 0, and Netlify cancels the build
+  # without a word. The few builds it could save are not worth a rule that can
+  # silently stop the website from ever updating.
 
 [build.environment]
   NODE_VERSION = "20"

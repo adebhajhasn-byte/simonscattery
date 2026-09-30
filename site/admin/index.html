@@ -102,7 +102,7 @@
     (function poll() {
       if (Date.now() - startedAt > LIMIT) {
         watching = false;
-        return unsure();
+        return stalled();
       }
       readVersion().then(function (now) {
         if (now === null) {
@@ -132,10 +132,23 @@
     })();
   }
 
+  /* We could not check (no earlier reading, or the stamp file was unreachable):
+     say what is known — the changes are saved — and nothing more. */
   function unsure() {
-    show('warn', 'Your changes have been published.',
-      'The website is updating now. This usually takes about 30 seconds — ' +
-      'open it in a moment and refresh the page.', true);
+    show('warn', 'Your changes are saved.',
+      'We could not check whether the website has updated yet. It usually ' +
+      'takes about 30 seconds — open it and refresh the page.', true);
+  }
+
+  /* We did check, repeatedly, and the live website never changed. Saying
+     "it is updating, give it a moment" here is exactly what leaves someone
+     staring at an old page for weeks believing it is on its way — so say
+     plainly that this is not normal and that it is not their doing. */
+  function stalled() {
+    show('fail', 'Your changes are saved, but the website has not updated yet.',
+      'This normally takes under a minute, and it has been several. Nothing you ' +
+      'did is wrong and nothing is lost. Please tell the person who looks after ' +
+      'your website, so they can check why it is not going live.', true);
   }
 
   /* ─────────────────────────────────────────────── hook into the editor */
