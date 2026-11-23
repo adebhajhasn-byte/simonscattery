@@ -7,8 +7,8 @@
     {
       "status_off": false,
       "meta": "",
-      "text": "First time mating. Kittens will be born <strong>on winter 2026</strong>.",
-      "status": "Close",
+      "text": "First time mating. <strong>The kittens are born!</strong> Meet them below.",
+      "status": "Born",
       "cols": "g2",
       "title": "CH Simons Janis Joplin <em>&amp;</em> Child of Maine P Montgomery",
       "images": [
@@ -22,7 +22,146 @@
         }
       ],
       "icon": "heart",
-      "text_style": "color:var(--ink-soft)"
+      "text_style": "color:var(--ink-soft)",
+      "kittens": [
+        {
+          "name": "Simons Ophiria",
+          "sex": "girl",
+          "colour": "Blue-cream torbie",
+          "photos": [
+            {
+              "image": "/images/ophiria-1.jpg",
+              "caption": "",
+              "alt": "Ophiria, eyes still closed, held in a hand"
+            },
+            {
+              "image": "/images/ophiria-2.jpg",
+              "caption": "",
+              "alt": "Ophiria stretched out on a grey blanket"
+            },
+            {
+              "image": "/images/ophiria-3.jpg",
+              "caption": "",
+              "alt": "Close-up of Ophiria's face, her eyes just open"
+            }
+          ]
+        },
+        {
+          "name": "Simons Orlando Blue",
+          "sex": "boy",
+          "colour": "Blue tabby with white",
+          "photos": [
+            {
+              "image": "/images/orlando-1.jpg",
+              "caption": "",
+              "alt": "Close-up of Orlando's face, held in a hand"
+            },
+            {
+              "image": "/images/orlando-2.jpg",
+              "caption": "",
+              "alt": "Orlando in profile, eyes still closed, held in a hand"
+            },
+            {
+              "image": "/images/orlando-3.jpg",
+              "caption": "",
+              "alt": "Orlando on a grey blanket, with other kittens behind him"
+            }
+          ]
+        },
+        {
+          "name": "Simons Orchidea",
+          "sex": "girl",
+          "colour": "Blue tabby with white",
+          "photos": [
+            {
+              "image": "/images/orchidea-1.jpg",
+              "caption": "",
+              "alt": "Close-up of Orchidea's face, held in a hand"
+            },
+            {
+              "image": "/images/orchidea-2.jpg",
+              "caption": "",
+              "alt": "Orchidea held on her back, little pink paws in the air"
+            },
+            {
+              "image": "/images/orchidea-3.jpg",
+              "caption": "",
+              "alt": "Orchidea in profile, held under her chin"
+            }
+          ]
+        },
+        {
+          "name": "Simons Oreo",
+          "sex": "boy",
+          "colour": "Black with white",
+          "photos": [
+            {
+              "image": "/images/oreo-1.jpg",
+              "caption": "",
+              "alt": "Oreo in profile, eyes still closed, held in a hand"
+            },
+            {
+              "image": "/images/oreo-2.jpg",
+              "caption": "",
+              "alt": "Oreo held on his back, mouth open, little paws stretched out"
+            },
+            {
+              "image": "/images/oreo-3.jpg",
+              "caption": "",
+              "alt": "Close-up of Oreo's face, eyes just open"
+            }
+          ]
+        },
+        {
+          "name": "Simons Otti",
+          "sex": "boy",
+          "colour": "Brown tabby with white",
+          "photos": [
+            {
+              "image": "/images/otti-1.jpg",
+              "caption": "",
+              "alt": "Close-up of Otti's face, held in a hand"
+            },
+            {
+              "image": "/images/otti-2.jpg",
+              "caption": "",
+              "alt": "Otti in profile, eyes still closed, held in a hand"
+            },
+            {
+              "image": "/images/otti-3.jpg",
+              "caption": "",
+              "alt": "Otti held on his back, little paws under his chin"
+            }
+          ]
+        },
+        {
+          "name": "Simons Oh Garfield",
+          "sex": "boy",
+          "colour": "Red classic tabby with white",
+          "photos": [
+            {
+              "image": "/images/garfield-1.jpg",
+              "caption": "",
+              "alt": "Oh Garfield seen from above, stretched out on a grey blanket"
+            },
+            {
+              "image": "/images/garfield-2.jpg",
+              "caption": "",
+              "alt": "Oh Garfield held on his back, mouth open"
+            },
+            {
+              "image": "/images/garfield-3.jpg",
+              "caption": "",
+              "alt": "Oh Garfield in profile, eyes still closed, held in a hand"
+            },
+            {
+              "image": "/images/garfield-4.jpg",
+              "caption": "",
+              "alt": "Close-up of Oh Garfield's face, held in a hand"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

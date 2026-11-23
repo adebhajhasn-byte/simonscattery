@@ -178,6 +178,16 @@ nav.open .nav-toggle span:nth-child(3){transform:translateY(-6.5px) rotate(-45de
   color:var(--sage-deep);padding:5px 14px;border-radius:30px;margin-bottom:12px}
 .pill.off{background:var(--clay-soft);color:var(--clay)}
 
+/* The newborns under a litter: a name, a little line, and a gallery that grows week by week. */
+.kitten{margin-top:38px}
+.kitten + .kitten{margin-top:52px}
+.khead{margin-bottom:16px}
+.khead h3{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(1.5rem,3.4vw,2rem);line-height:1.15;color:var(--sage-deep)}
+.kinfo{font-size:.66rem;letter-spacing:3px;text-transform:uppercase;color:var(--clay);margin-top:4px}
+.gallery figure{margin:0}
+.gallery figure img{height:auto}
+.gallery figcaption{font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--ink-faint);text-align:center;margin-top:9px}
+
 /* ---------- BLOG LIST ---------- */
 .posts{display:grid;gap:22px;max-width:860px;margin:0 auto}
 .post{display:block;text-decoration:none;background:var(--card);border:1px solid var(--line-soft);border-radius:10px;
@@ -306,6 +316,9 @@ body.lb-lock{overflow:hidden}
   .gallery.g3{grid-template-columns:repeat(2,1fr)}
   .panel{padding:30px 24px}
   .shead{gap:14px;margin:42px 0 30px}
+  /* A long heading (two cats' names) used to stay on one line and push the whole
+     page sideways on a phone. Let it wrap; the little rule after it can shrink away. */
+  .shead h2{white-space:normal;min-width:0}
   .lb-prev{left:8px}.lb-next{right:8px}.lb-btn{width:46px;height:46px}
 }
 @media(max-width:460px){ .gallery,.gallery.g2,.gallery.g3{grid-template-columns:1fr} }

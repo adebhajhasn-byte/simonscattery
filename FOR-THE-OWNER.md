@@ -51,6 +51,22 @@ Leave the switch off and nothing shows — exactly as before.
 
 ---
 
+## Newborn kittens — and a new photo every week
+
+Go to **Pages → Kittens page** and open the litter the kittens belong to.
+
+1. Scroll to **The kittens** and press **Add kitten**.
+2. Fill in the **Name**, **Girl or boy** and **Colour**.
+3. Under **Photos** press **Add photo** and pick a picture. In **Text under the photo**
+   you can write *Week 2* or *3 weeks old* (leave it empty for no text).
+4. Press **Publish**.
+
+Every week, open the same kitten and press **Add photo** again. Each kitten gets its own
+block, and it simply grows — new photos go at the end, in the order you add them (drag a
+photo to change the order). Nothing else on the page changes.
+
+---
+
 ## The rest, briefly
 
 **Photos** — click a photo box, then either pick one already on the site or
