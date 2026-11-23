@@ -45,6 +45,28 @@
               "alt": "Close-up of Ophiria's face, her eyes just open"
             }
           ]
+        },
+        {
+          "name": "Simons Orlando Blue",
+          "sex": "boy",
+          "colour": "Blue tabby with white",
+          "photos": [
+            {
+              "image": "/images/orlando-1.jpg",
+              "caption": "",
+              "alt": "Close-up of Orlando's face, held in a hand"
+            },
+            {
+              "image": "/images/orlando-2.jpg",
+              "caption": "",
+              "alt": "Orlando in profile, eyes still closed, held in a hand"
+            },
+            {
+              "image": "/images/orlando-3.jpg",
+              "caption": "",
+              "alt": "Orlando on a grey blanket, with other kittens behind him"
+            }
+          ]
         }
       ]
     }
