@@ -111,6 +111,28 @@
               "alt": "Close-up of Oreo's face, eyes just open"
             }
           ]
+        },
+        {
+          "name": "Simons Otti",
+          "sex": "boy",
+          "colour": "Brown tabby with white",
+          "photos": [
+            {
+              "image": "/images/otti-1.jpg",
+              "caption": "",
+              "alt": "Close-up of Otti's face, held in a hand"
+            },
+            {
+              "image": "/images/otti-2.jpg",
+              "caption": "",
+              "alt": "Otti in profile, eyes still closed, held in a hand"
+            },
+            {
+              "image": "/images/otti-3.jpg",
+              "caption": "",
+              "alt": "Otti held on his back, little paws under his chin"
+            }
+          ]
         }
       ]
     }
