@@ -133,6 +133,33 @@
               "alt": "Otti held on his back, little paws under his chin"
             }
           ]
+        },
+        {
+          "name": "Simons Oh Garfield",
+          "sex": "boy",
+          "colour": "Red classic tabby with white",
+          "photos": [
+            {
+              "image": "/images/garfield-1.jpg",
+              "caption": "",
+              "alt": "Oh Garfield seen from above, stretched out on a grey blanket"
+            },
+            {
+              "image": "/images/garfield-2.jpg",
+              "caption": "",
+              "alt": "Oh Garfield held on his back, mouth open"
+            },
+            {
+              "image": "/images/garfield-3.jpg",
+              "caption": "",
+              "alt": "Oh Garfield in profile, eyes still closed, held in a hand"
+            },
+            {
+              "image": "/images/garfield-4.jpg",
+              "caption": "",
+              "alt": "Close-up of Oh Garfield's face, held in a hand"
+            }
+          ]
         }
       ]
     }
