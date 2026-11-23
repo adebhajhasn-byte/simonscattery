@@ -263,6 +263,35 @@ collections:
                   - { name: "alt", label: "Short description of the photo", widget: "string", required: false }
               - { name: "cols", label: "Photos per row", widget: "select",
                   options: [{ label: "Three", value: "g3" }, { label: "Two", value: "g2" }, { label: "One big photo", value: "g1" }] }
+              - name: "kittens"
+                label: "The kittens"
+                label_singular: "kitten"
+                widget: "list"
+                required: false
+                summary: "{{name}} · {{sex}}"
+                hint: >-
+                  Once the kittens are born, add each one here. To show a new picture later,
+                  open that kitten and press “Add photo” — the photos stay in the order you add them.
+                fields:
+                  - { name: "name", label: "Name", widget: "string", hint: "For example: Simons Ophiria" }
+                  - { name: "sex", label: "Girl or boy", widget: "select", required: false,
+                      options: [{ label: "Girl", value: "girl" }, { label: "Boy", value: "boy" }] }
+                  - { name: "colour", label: "Colour", widget: "string", required: false,
+                      hint: "For example: Blue-cream torbie" }
+                  - name: "photos"
+                    label: "Photos"
+                    label_singular: "photo"
+                    widget: "list"
+                    required: false
+                    collapsed: false
+                    summary: "{{caption}}"
+                    hint: "Add a new photo here whenever you have one. Photos stay in the order you add them."
+                    fields:
+                      - { name: "image", label: "Photo", widget: "image", required: true, choose_url: false }
+                      - { name: "caption", label: "Text under the photo", widget: "string", required: false,
+                          hint: "For example: Week 2, or 3 weeks old. Leave empty for no text." }
+                      - { name: "alt", label: "Short description of the photo", widget: "string", required: false,
+                          hint: "For people who cannot see the picture. If you leave it empty, the kitten's name is used." }
 
       # ─────────── our area
       - name: "area"

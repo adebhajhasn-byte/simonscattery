@@ -99,6 +99,8 @@ const photoSrc = (it) =>
   typeof it === 'string' ? it : (it && (it.image || it.src)) || '';
 const photoAlt = (it) =>
   (it && typeof it === 'object' && (it.alt || '')) || '';
+const photoCaption = (it) =>
+  String((it && typeof it === 'object' && it.caption) || '').trim();
 
 /* Does a local path the editor saved actually correspond to a real file?
    A missing picture or video shows nothing at all in the browser — worse
@@ -242,12 +244,20 @@ const head = (title, extra = '', navActive = null) =>
 
 const tail = (c) => footer(c) + '\n' + toTop + '\n<script src="app.js"></script>\n</body>\n</html>\n';
 
-const gallery = (cols, images, fallbackAlt = '') => {
+/* `captions` is only switched on for the kittens, whose photos can carry a
+   short label ("Week 2") so the weekly pictures read as a growth story. Every
+   other gallery stays exactly as it was: a bare <img> per photo. */
+const gallery = (cols, images, fallbackAlt = '', captions = false) => {
   if (!images || !images.length) return '';
   const t = images
     .filter((im) => photoSrc(im))
-    .map((im) => `\n      <img loading="lazy" src="${e(img(photoSrc(im)))}" ` +
-      `alt="${e(photoAlt(im) || fallbackAlt)}">`)
+    .map((im) => {
+      const tag = `<img loading="lazy" src="${e(img(photoSrc(im)))}" ` +
+        `alt="${e(photoAlt(im) || fallbackAlt)}">`;
+      if (!captions) return `\n      ${tag}`;
+      const cap = photoCaption(im);
+      return `\n      <figure>${tag}${cap ? `<figcaption>${e(cap)}</figcaption>` : ''}</figure>`;
+    })
     .join('');
   if (!t) return '';
   const c = /^g[123]$/.test(cols || '') ? cols : 'g3';
@@ -506,6 +516,25 @@ const homePage = (h, posts, contact) => {
     tail(contact);
 };
 
+const SEX = { girl: 'Girl', boy: 'Boy' };
+
+/* One newborn: a name, "Girl · Blue-cream torbie", and a photo gallery that
+   grows as new pictures are added week by week. Name, sex and colour are all
+   optional — whatever is empty is simply left out, as everywhere else. */
+const kittenBlock = (litter, k) => {
+  const name = String(k.name ?? '').trim();
+  const where = `kittens page: ${litter.title || 'litter'} · ${name || 'unnamed kitten'}`;
+  if (!name) warn(`${where} has no name.`);
+  checkPhotos(`${where} photos`, k.photos);
+  const sex = SEX[k.sex] || String(k.sex ?? '').trim();
+  const info = [sex, String(k.colour ?? '').trim()].filter(Boolean).map((x) => e(x)).join(' · ');
+  const top = name || info
+    ? `\n      <div class="khead reveal">${name ? `<h3>${e(name)}</h3>` : ''}` +
+      `${info ? `<p class="kinfo">${info}</p>` : ''}</div>`
+    : '';
+  return `\n    <div class="kitten">${top}\n      ${gallery('g3', k.photos, name, true)}\n    </div>`;
+};
+
 const kittensPage = (k, contact) => {
   const out = (k.litters || []).map((l) => {
     checkPhotos(`kittens page: ${l.title || 'litter'} photos`, l.images);
@@ -515,9 +544,10 @@ const kittensPage = (k, contact) => {
       ? `\n      <p class="prose" style="${style}">${eRich(l.text)}</p>` : '';
     const meta = String(l.meta ?? '').trim()
       ? `\n      <p class="meta-line">${eRich(l.meta)}</p>` : '';
+    const kittens = (l.kittens || []).map((kit) => kittenBlock(l, kit)).join('');
     return `\n  <section>\n    ${shead(l.icon, l.title)}\n` +
       `    <div class="litter reveal">\n      ${pill}${text}${meta}\n    </div>\n` +
-      `    ${gallery(l.cols, l.images, l.title)}\n  </section>\n`;
+      `    ${gallery(l.cols, l.images, l.title)}${kittens}\n  </section>\n`;
   }).join('');
 
   return head(e(k.title_tag), '', 'kittens.html') +

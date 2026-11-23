@@ -7,8 +7,8 @@
     {
       "status_off": false,
       "meta": "",
-      "text": "First time mating. Kittens will be born <strong>on winter 2026</strong>.",
-      "status": "Close",
+      "text": "First time mating. <strong>The kittens are born!</strong> Meet them below.",
+      "status": "Born",
       "cols": "g2",
       "title": "CH Simons Janis Joplin <em>&amp;</em> Child of Maine P Montgomery",
       "images": [
@@ -22,7 +22,31 @@
         }
       ],
       "icon": "heart",
-      "text_style": "color:var(--ink-soft)"
+      "text_style": "color:var(--ink-soft)",
+      "kittens": [
+        {
+          "name": "Simons Ophiria",
+          "sex": "girl",
+          "colour": "Blue-cream torbie",
+          "photos": [
+            {
+              "image": "/images/ophiria-1.jpg",
+              "caption": "",
+              "alt": "Ophiria, eyes still closed, held in a hand"
+            },
+            {
+              "image": "/images/ophiria-2.jpg",
+              "caption": "",
+              "alt": "Ophiria stretched out on a grey blanket"
+            },
+            {
+              "image": "/images/ophiria-3.jpg",
+              "caption": "",
+              "alt": "Close-up of Ophiria's face, her eyes just open"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
