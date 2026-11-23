@@ -67,6 +67,28 @@
               "alt": "Orlando on a grey blanket, with other kittens behind him"
             }
           ]
+        },
+        {
+          "name": "Simons Orchidea",
+          "sex": "girl",
+          "colour": "Blue tabby with white",
+          "photos": [
+            {
+              "image": "/images/orchidea-1.jpg",
+              "caption": "",
+              "alt": "Close-up of Orchidea's face, held in a hand"
+            },
+            {
+              "image": "/images/orchidea-2.jpg",
+              "caption": "",
+              "alt": "Orchidea held on her back, little pink paws in the air"
+            },
+            {
+              "image": "/images/orchidea-3.jpg",
+              "caption": "",
+              "alt": "Orchidea in profile, held under her chin"
+            }
+          ]
         }
       ]
     }
