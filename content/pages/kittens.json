@@ -89,6 +89,28 @@
               "alt": "Orchidea in profile, held under her chin"
             }
           ]
+        },
+        {
+          "name": "Simons Oreo",
+          "sex": "boy",
+          "colour": "Black with white",
+          "photos": [
+            {
+              "image": "/images/oreo-1.jpg",
+              "caption": "",
+              "alt": "Oreo in profile, eyes still closed, held in a hand"
+            },
+            {
+              "image": "/images/oreo-2.jpg",
+              "caption": "",
+              "alt": "Oreo held on his back, mouth open, little paws stretched out"
+            },
+            {
+              "image": "/images/oreo-3.jpg",
+              "caption": "",
+              "alt": "Close-up of Oreo's face, eyes just open"
+            }
+          ]
         }
       ]
     }
